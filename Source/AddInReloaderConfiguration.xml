@@ -1,0 +1,9 @@
+﻿<AddInReloaderConfiguration>
+  <WatchedAddIn Path="C:\Work\ExcelDna\Samples\GeneralTestsCS\bin\Debug\GeneralTestsCS-AddIn.xll" >
+    <WatchedFile Path="C:\Work\ExcelDna\Samples\GeneralTestsCS\bin\Debug\GeneralTestsCS.dll" />
+  </WatchedAddIn>
+  <!--<WatchedAddIn Path="OtherAddIn.xll" >
+    <WatchedFile Path="zzz" />
+    <WatchedFile Path="qqq" />
+  </WatchedAddIn>-->
+</AddInReloaderConfiguration>
