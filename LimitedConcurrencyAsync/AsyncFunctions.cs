@@ -25,14 +25,10 @@ namespace LimitedConcurrencyAsync
             string callerFunctionName = "Sleep";
             object callerParameters = new object[] {seconds}; // This need not be an array if it's just a single parameter
 
-            return AsyncTaskUtil.RunTask(callerFunctionName, callerParameters, () =>
+            return AsyncTaskUtil.RunAsTask(callerFunctionName, callerParameters, _fourThreadFactory, () =>
                 {
-                    // The function here should return the Task to run
-                    return _fourThreadFactory.StartNew(() =>
-                        {
-                            Thread.Sleep(seconds * 1000);
-                            return "Slept on Thread " + Thread.CurrentThread.ManagedThreadId;
-                        });
+                    Thread.Sleep(seconds * 1000);
+                    return "Slept on Thread " + Thread.CurrentThread.ManagedThreadId;
                 });
         }
 
@@ -44,6 +40,7 @@ namespace LimitedConcurrencyAsync
             string callerFunctionName = "SleepPerCaller";
             object callerParameters = new object[] { seconds, callerReference };
 
+            // The RunTask version (instead of RunAsTask used above) is more flexible if the Task will be created in some other way.
             return AsyncTaskUtil.RunTask(callerFunctionName, callerParameters, () =>
             {
                 // The function here should return the Task to run

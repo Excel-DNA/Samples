@@ -29,6 +29,16 @@ namespace ExcelDna.Utils
             });
         }
 
+        public static object RunAsTask<TResult>(string callerFunctionName, object callerParameters, TaskFactory taskFactory, Func<TResult> function)
+        {
+            return RunTask(callerFunctionName, callerParameters, () => taskFactory.StartNew(function));
+        }
+
+        public static object RunAsTaskWithCancellation<TResult>(string callerFunctionName, object callerParameters, TaskFactory taskFactory, Func<CancellationToken, TResult> function)
+        {
+            return RunTaskWithCancellation(callerFunctionName, callerParameters, cancellationToken => taskFactory.StartNew(() => function(cancellationToken), cancellationToken));
+        }
+
         // Helper class to wrap a Task in an Observable - allowing one Subscriber.
         class ExcelTaskObservable<TResult> : IExcelObservable
         {
