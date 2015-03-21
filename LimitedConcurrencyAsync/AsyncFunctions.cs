@@ -18,38 +18,38 @@ namespace LimitedConcurrencyAsync
             _fourThreadFactory = new TaskFactory(fourThreadScheduler);
         }
 
-        public static object Sleep(int durationMs)
+        public static object Sleep(int seconds)
         {
             // The callerFunctionName and callerParameters are internally combined and used as a 'key' 
             // to link the underlying RTD calls together.
             string callerFunctionName = "Sleep";
-            object callerParameters = new object[] {durationMs};    // This need not be an array if it's just a single parameter
+            object callerParameters = new object[] {seconds}; // This need not be an array if it's just a single parameter
 
             return AsyncTaskUtil.RunTask(callerFunctionName, callerParameters, () =>
                 {
                     // The function here should return the Task to run
                     return _fourThreadFactory.StartNew(() =>
                         {
-                            Thread.Sleep(durationMs);
+                            Thread.Sleep(seconds * 1000);
                             return "Slept on Thread " + Thread.CurrentThread.ManagedThreadId;
                         });
                 });
         }
 
-        public static object SleepPerCall(int durationMs)
+        public static object SleepPerCaller(int seconds)
         {
             // Trick to get each call to be a separate instance
             // Normally you only want to add the actual parameters passed in
             object callerReference = XlCall.Excel(XlCall.xlfCaller);
-            string callerFunctionName = "SleepPerCall";
-            object callerParameters = new object[] { durationMs, callerReference };
+            string callerFunctionName = "SleepPerCaller";
+            object callerParameters = new object[] { seconds, callerReference };
 
             return AsyncTaskUtil.RunTask(callerFunctionName, callerParameters, () =>
             {
                 // The function here should return the Task to run
                 return _fourThreadFactory.StartNew(() =>
                 {
-                    Thread.Sleep(durationMs);
+                    Thread.Sleep(seconds * 1000);
                     return string.Format("Slept on Thread {0}, called from {1}", Thread.CurrentThread.ManagedThreadId, callerReference);
                 });
             });

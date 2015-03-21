@@ -1,12 +1,14 @@
 ﻿LimitedConcurrencyAsync sample
 ---
 
+[Related to this discussion: https://groups.google.com/d/topic/exceldna/tCbtb2zmQrs/discussion]
+
 This sample shows how the async function support can be customised by using the .NET 4 Task-based functionality.
 In particular, we create a limited concurrency scheduler, that will restrict the number of async threads that are used to run Tasks.
 
 Some hard-coded paths are set in the project properties in the Debug tab - the exact Excel version and command line arguments. These must be fixed before running the sample. One way is to run "Uninstall-Package Excel-DNA" and then "Install-Package Excel-DNA" in the NuGet Package Manager Console.
 
-When running, there should be two new functions in Excel - "Sleep" and "SleepPerCaller", taking the number of milliseconds to sleep.
+When running, there should be two new functions in Excel - "Sleep" and "SleepPerCaller", taking the number of seconds to sleep.
 
 Some details on the code:
 
@@ -16,7 +18,7 @@ This is the user code part of the sample. A custom TaskScheduler and related Tas
 
 There are two versions of the Sleep function:
 ** Sleep - different calls to Sleep with the same timeout parameter will be combined and run as the same Task.
-** SleepPerCell - calls from different cells will create separate Task, making the concurrency behaviour easier to see.
+** SleepPerCaller - calls from different cells will create separate Task, making the concurrency behaviour easier to see.
 
 * AsyncTaskUtil.cs
 
