@@ -33,5 +33,10 @@ namespace Logging
         }
 
         public void AutoClose() { }
+
+        public static string GetFullPath(string fileName)
+        {
+            return System.IO.Path.GetFullPath(fileName);
+        }
     }
 }
