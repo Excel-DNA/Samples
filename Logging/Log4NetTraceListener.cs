@@ -3,6 +3,8 @@
 // https://code.google.com/p/cavity/source/browse/trunk/src/Cavity%20Diagnostics%20log4net/Class%20Libraries/Diagnostics.Log4Net/Diagnostics/Log4NetTraceListener.cs
 // Code License: MIT License (http://www.opensource.org/licenses/mit-license.php)
 
+// Source for similar implementation targeting NLog (included in the NLog assembly) is here: https://github.com/jkowalski/NLog/blob/master/src/NLog/NLogTraceListener.cs
+
 namespace Cavity.Diagnostics
 {
     using System;
