@@ -1,5 +1,5 @@
 <DnaLibrary Name="LocalizedResources Add-In" RuntimeVersion="v4.0">
   <ExternalLibrary Path="LocalizedResources.dll" LoadFromBytes="true" Pack="true" />
-  <Reference Path="fr-FR\LocalizedResources.resources" Pack="true" />
-  <Reference Path="es\LocalizedResources.resources" Pack="true" />
+  <Reference Path="fr-FR\LocalizedResources.resources.dll" Pack="true" />
+  <Reference Path="es\LocalizedResources.resources.dll" Pack="true" />
 </DnaLibrary>
