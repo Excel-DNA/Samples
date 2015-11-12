@@ -72,7 +72,9 @@
 xcopy "$(TargetDir)LocalizedResources-AddIn.dna*" "$(TargetDir)LocalizedResources-AddIn64.dna*" /C /Y
 xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9.65\tools\ExcelDna64.xll" "$(TargetDir)LocalizedResources-AddIn64.xll*" /C /Y
 "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9.65\tools\ExcelDnaPack.exe" "$(TargetDir)LocalizedResources-AddIn.dna" /Y
-"$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9.65\tools\ExcelDnaPack.exe" "$(TargetDir)LocalizedResources-AddIn64.dna" /Y</PostBuildEvent>
+"$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9.65\tools\ExcelDnaPack.exe" "$(TargetDir)LocalizedResources-AddIn64.dna" /Y
+
+xcopy "$(TargetDir)LocalizedResources-AddIn-packed.xll" "$(TargetDir)Packed\LocalizedResources-AddIn-packed.xll*" /C /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
