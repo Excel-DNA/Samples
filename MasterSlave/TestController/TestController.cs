@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
@@ -12,9 +14,7 @@ namespace TestController
     {
         public static void Main()
         {
-            var process = LoadAndUnload();
-            process.EnableRaisingEvents = true;
-            process.Exited += Process_Exited;
+            LoadAndUnload();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
@@ -26,28 +26,35 @@ namespace TestController
         private static void Process_Exited(object sender, EventArgs e)
         {
             var process = (Process)sender;
+            Console.WriteLine($"Excel exited with code {process.ExitCode}");
             Debug.Print($"Excel exited with code {process.ExitCode}");
         }
 
-        public static Process LoadAndUnload()
+        public static void LoadAndUnload()
         {
-            var Application = new Application();
+            var basePath = @"C:\Work\Excel-DNA\Samples\MasterSlave\";
+
+              var Application = new Application();
             var process = Process.GetProcessesByName("Excel").First();
+            process.EnableRaisingEvents = true;
+            process.Exited += Process_Exited;
 
             Debug.Print(Application.Version);
-            Application.RegisterXLL(@"C:\Work\Excel-DNA\Samples\MasterSlave\Master\bin\Debug\Master-AddIn.xll");
+            Application.Visible = true;
+            
+
+            Application.RegisterXLL(basePath + @"Master\bin\Debug\Master-AddIn.xll");
             foreach (AddIn addIn in Application.AddIns2)
             {
                 if (addIn.IsOpen)
                     Debug.Print($"> {addIn.Name} @ {addIn.Path}");
             }
-            Application.Visible = true;
-            //Application.Do
-            //Application.Run("LoadSlave");
-            //Application.Run("UnloadSlave");
-            Application.Quit();
+            
+            // These are macros defined in Master
+            Application.Run("RegisterSlave");
+            Application.Run("UnregisterSlave");
 
-            return process;
+            Application.Quit();
         }
     }
 }

@@ -44,8 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddIn.cs" />
+    <Compile Include="SlaveAddIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ribbon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Slave-AddIn.dna">

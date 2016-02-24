@@ -19,7 +19,7 @@ namespace MasterSlave
 
         public override string GetCustomUI(string RibbonID)
         {
-            XlCall.Excel(XlCall.xlcMessage, "BANG!!!!");
+            // XlCall.Excel(XlCall.xlcMessage, "BANG!!!!");
             Console.Beep();
             Console.Beep();
             Console.Beep();
