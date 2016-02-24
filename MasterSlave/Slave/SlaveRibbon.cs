@@ -11,9 +11,9 @@ using ExcelDna.Integration.CustomUI;
 namespace MasterSlave
 {
     [ComVisible(true)]
-    public class Ribbon : ExcelRibbon
+    public class SlaveRibbon : ExcelRibbon
     {
-        public Ribbon()
+        public SlaveRibbon()
         {
         }
 
@@ -28,8 +28,8 @@ namespace MasterSlave
             <customUI xmlns = 'http://schemas.microsoft.com/office/2006/01/customui' >
                 <ribbon>
                     <tabs>
-                        <tab id = 'CustomTab' label = 'My Tab' >
-                            <group id = 'SampleGroup' label = 'My Sample Group' >
+                        <tab id = 'MyTab' label = 'Slave' >
+                            <group id = 'MyGroup' label = 'My Sample Group' >
                                 <button id = 'Button1' label = 'My Button Label' size = 'large' onAction = 'RunTagMacro' tag = 'ShowHelloMessage' />
                                 <button id = 'Button2' label = 'My Second Button' size = 'normal' onAction = 'OnButtonPressed' />
                             </group>

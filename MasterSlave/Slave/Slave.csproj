@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="SlaveAddIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ribbon.cs" />
+    <Compile Include="SlaveRibbon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Slave-AddIn.dna">
