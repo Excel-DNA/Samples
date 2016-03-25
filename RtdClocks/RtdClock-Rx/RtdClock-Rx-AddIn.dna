@@ -1,0 +1,11 @@
+<DnaLibrary Name="RtdClock-Rx Add-In" RuntimeVersion="v4.0">
+  <ExternalLibrary Path="RtdClock-Rx.dll" LoadFromBytes="true" Pack="true" />
+  
+  <!-- The following entries are not required for the normal (unpacked) add-in to work, 
+       but enable the Rx libraries to be added during packing so that the -packaed.xll works standalone.  -->
+
+  <Reference Path="System.Reactive.Core.dll" Pack="true" />
+  <Reference Path="System.Reactive.Interfaces.dll" Pack="true" />
+  <Reference Path="System.Reactive.Linq.dll" Pack="true" />
+  <Reference Path="System.Reactive.PlatformServices.dll" Pack="true" />
+</DnaLibrary>

@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-ExcelRtdServer", "RtdClock-ExcelRtdServer\RtdClock-ExcelRtdServer.csproj", "{95E29CF7-B6A0-44C8-A07F-0261D630D310}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-IExcelObservable", "RtdClock-IExcelObservable\RtdClock-IExcelObservable.csproj", "{BBA5690D-8B8A-444A-B63E-681B97D1B282}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-Rx", "RtdClock-Rx\RtdClock-Rx.csproj", "{F71ED465-80F8-474F-AF62-314A9B398356}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-Rx-Registration", "RtdClock-Rx-Registration\RtdClock-Rx-Registration.csproj", "{6B1C2A34-1C5F-486A-9226-BDF67C303500}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9798D1CF-1E55-44AC-A86A-B2D20F7F858D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95E29CF7-B6A0-44C8-A07F-0261D630D310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95E29CF7-B6A0-44C8-A07F-0261D630D310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95E29CF7-B6A0-44C8-A07F-0261D630D310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95E29CF7-B6A0-44C8-A07F-0261D630D310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA5690D-8B8A-444A-B63E-681B97D1B282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA5690D-8B8A-444A-B63E-681B97D1B282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA5690D-8B8A-444A-B63E-681B97D1B282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA5690D-8B8A-444A-B63E-681B97D1B282}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F71ED465-80F8-474F-AF62-314A9B398356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F71ED465-80F8-474F-AF62-314A9B398356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F71ED465-80F8-474F-AF62-314A9B398356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F71ED465-80F8-474F-AF62-314A9B398356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B1C2A34-1C5F-486A-9226-BDF67C303500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B1C2A34-1C5F-486A-9226-BDF67C303500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B1C2A34-1C5F-486A-9226-BDF67C303500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B1C2A34-1C5F-486A-9226-BDF67C303500}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

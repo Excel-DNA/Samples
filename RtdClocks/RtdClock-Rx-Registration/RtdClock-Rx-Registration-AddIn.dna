@@ -1,0 +1,19 @@
+<DnaLibrary Name="RtdClock-Rx-Registration Add-In" RuntimeVersion="v4.0">
+  
+  <!-- Note that we've added ExplicitRegistration="true" here - 
+       this means Excel-DNA won't automatically process the assembly and register. 
+       In our AutoOpen we can then pre-process functions (e.g. to generate the IObservable wrappers)
+       and then register the functions ourselves. -->
+  <ExternalLibrary Path="RtdClock-Rx-Registration.dll" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" />
+  
+  <!-- The following entries are not required for the normal (unpacked) add-in to work, 
+       but enable the Registration and Rx libraries to be added during packing so that the -packaed.xll works standalone.  -->
+  
+  <Reference Path="ExcelDna.Registration.dll" Pack="true" />
+
+  <Reference Path="System.Reactive.Core.dll" Pack="true" />
+  <Reference Path="System.Reactive.Interfaces.dll" Pack="true" />
+  <Reference Path="System.Reactive.Linq.dll" Pack="true" />
+  <Reference Path="System.Reactive.PlatformServices.dll" Pack="true" />
+  
+</DnaLibrary>
