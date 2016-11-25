@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExcelDna.Integration">
-      <HintPath>packages\Excel-DNA.Lib.0.32.0\lib\ExcelDna.Integration.dll</HintPath>
+      <HintPath>packages\ExcelDna.Integration.0.33.9\lib\ExcelDna.Integration.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel">
@@ -87,11 +87,14 @@
   <Import Project="$(FSharpTargetsPath)" />
   <PropertyGroup>
     <PostBuildEvent>
-xcopy "$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDna.xll" "$(TargetDir)FSharpRibbon-AddIn.xll*" /C /Y
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)FSharpRibbon-AddIn.xll*" /C /Y
 xcopy "$(TargetDir)FSharpRibbon-AddIn.dna*" "$(TargetDir)FSharpRibbon-AddIn64.dna*" /C /Y
-xcopy "$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDna64.xll" "$(TargetDir)FSharpRibbon-AddIn64.xll*" /C /Y
-"$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDnaPack.exe" "$(TargetDir)FSharpRibbon-AddIn.dna" /Y
-"$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDnaPack.exe" "$(TargetDir)FSharpRibbon-AddIn64.dna" /Y</PostBuildEvent>
+xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna64.xll" "$(TargetDir)FSharpRibbon-AddIn64.xll*" /C /Y
+"$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)FSharpRibbon-AddIn.dna" /Y
+"$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)FSharpRibbon-AddIn64.dna" /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
