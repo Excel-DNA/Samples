@@ -16,6 +16,7 @@ let showMessage () =
 
 
 // This type defines the ribbon interface. It is a public class that derives from ExcelRibbon
+[<ComVisible(true)>]    // This attribute is only needed if there is an assembly-level [<assembly:ComVisible(false)>] attribute.
 type public MyRibbon() =
     inherit ExcelRibbon()
 
