@@ -4,6 +4,8 @@ This sample shows how to add a ribbon UI extension with the Excel-DNA add-in, an
 
 ## Initial setup
 
+The initial setup will create a new add-in with a simple test function (it's a useful indicator to show that the add-in is loaded into the Excel session).
+
 1. Create new Class Library project.
 2. Install `ExcelDna.AddIn` package.
 3. Add a small test function:
@@ -24,6 +26,8 @@ namespace Ribbon
 4. Press F5 to load in Excel, and then test `=dnaRibbonTest()` in a cell.
 
 ## Add the ribbon controller
+
+Next we add a class to implement the ribbon UI extension, with a simple button.
 
 1. Add a reference to the `System.Windows.Forms` assembly (we'll use that for showing our messages).
 
@@ -103,3 +107,98 @@ Other ribbon-related resources:
 * [Ron de Bruin's Excel Tips](http://www.rondebruin.nl/win/s2/win003.htm)
 * [Andy Pope's RibbonX Visual Designer](http://www.andypope.info/vba/ribboneditor.htm)
 
+## Add access to the Excel COM object model
+
+In this step we add access to the Excel COM object model, to show how C# code can use the familiar object model to manipulate Excel.
+
+1. Add a reference to the Primary Interop Assembly (PIA) for Excel. The easiest way to do this is to install the `ExcelDna.Interop` NuGet package. This will install the interop assemblies that correspond to Excel 2010, so are suitable for add-ins that support Excel 2010 and later.
+
+2. Add a class for our data writer:
+
+```cs
+using System;
+using ExcelDna.Integration;
+using Microsoft.Office.Interop.Excel;
+
+namespace Ribbon
+{
+    public class DataWriter
+    {
+        public static void WriteData()
+        {
+            Application xlApp = (Application)ExcelDnaUtil.Application;
+
+            Workbook wb = xlApp.ActiveWorkbook;
+            if (wb == null)
+                return;
+
+            Worksheet ws = wb.Worksheets.Add(Type: XlSheetType.xlWorksheet);
+            ws.Range["A1"].Value = "Date";
+            ws.Range["B1"].Value = "Value";
+
+            Range headerRow = ws.Range["A1", "B1"];
+            headerRow.Font.Size = 12;
+            headerRow.Font.Bold = true;
+
+            // Generally it's faster to write an array to a range
+            var values = new object[100, 2];
+            var startDate = new DateTime(2007, 1, 1);
+            var rand = new Random();
+            for (int i = 0; i < 100; i++)
+            {
+                values[i, 0] = startDate.AddDays(i);
+                values[i, 1] = rand.NextDouble();
+            }
+
+            ws.Range["A2"].Resize[100, 2].Value = values;
+            ws.Columns["A:A"].EntireColumn.AutoFit();
+
+            // Add a chart
+            Range dataRange= ws.Range["A1:B101"];
+            dataRange.Select();
+            ws.Shapes.AddChart(XlChartType.xlLineMarkers).Select();
+            xlApp.ActiveChart.SetSourceData(Source: dataRange);
+        }
+    }
+}
+```
+
+3. Update the ribbon handler to call our data writer:
+
+```cs
+        public void OnButtonPressed(IRibbonControl control)
+        {
+            MessageBox.Show("Hello from control " + control.Id);
+			DataWriter.WriteData();
+        }
+```
+
+4. Press F5 to load and press the ribbon button to run the `WriteData` code.
+
+### Getting the root `Application` object
+
+A key call in the above code is to retrieve the root `Application` object that matches the Excel instance that is hosting the add-in. We call `ExcelDnaUtil.Application`, which returns an object that is always the correct `Application` COM object. Code that attempts to get the `Application` object in other ways, e.g. by calling `new Application()` might work in some cases, but there is a danger that the Excel instance returned is not that instance hosting the add-in.  
+
+Once the root `Application` object is retrieved, the object model is accessed normally as it would be from VBA.
+
+* Don't confuse the types `Microsoft.Office.Interop.Excel.Application` that we use here with the WinForms type `System.Windows.Forms.Application`. You might use a namespace alias to distinguish these in your code.
+
+### Interop assembly versions
+
+Each version of Excel adds some extensions to the object model (and rarely, but sometimes removes some parts). The changes might be entire classes and interfaces, methods on an interface or parameters or a method. Most add-ins are expected to run on different Excel versions, so some care is needed to make sure only object models features available on all the target versions are used.
+
+The simplest approach is to pick a minimum Excel version to support, and use the COM object model definitions (PIA asemblies) from that version. Such code will work against the chosen version, and any any other version (newer or older) that implements the same parts of the object model. Since most Excel versions only add to the object model, this means that add-in will work correctly with newer versions too. This is similar to developing a VBA extension on Excel 2010, which might then fail on older versions if the VBA code uses methods not available on the running version.
+
+In this example we've installed the 'ExcelDna.Interop' NuGet package, which includes the interop assemblies for Excel 2010. This means features added in Excel 2013 and later will not be shown in the object model IntelliSense, ensuring that the add-in only uses features available on the minimum version. 
+
+### Correct COM / .NET interop usage
+
+There is a lot of misinformation on the web about using the COM object model from .NET.
+
+* To ensure that the Excel process always correctly exits, Excel add-ins should *only call the Excel COM object model from the main Excel thread, in a macro of callback context*. Never attempt to access the COM object model from multiple threads - since the Excel COM object model is single-threaded (technically a Single-Threaded Apartment) there can be no performance benefit in trying to access Excel from multiple threads.
+
+* An Excel add-in should never call `Marshal.ReleaseComObject(...)` or `Marshal.FinalReleaseComObject(...)` when doing Excel interop. It is a confusing anti-pattern, but any information about this, including from Microsoft, that indicates one should manually release COM references from .NET is incorrect. The .NET runtime and garbage collector correctly keep track of and clean up COM references.
+
+* Any guidance that mentions 'double-dots' is misleading. Sometimes this indicates that expressions calling into the object model should not chain object model access, i.e. to avoid code like `myWorkbook.Sheets[1].Range["A1"].Value = "abc". Such code is fine - just ignore any 'two dots' guidance.
+
+* I've posted some more details on these issues (in the context of automating Excel from another application) in a [Stack Overflow answer](http://stackoverflow.com/a/38111294/44264).

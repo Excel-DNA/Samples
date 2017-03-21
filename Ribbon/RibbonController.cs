@@ -26,6 +26,7 @@ namespace Ribbon
         public void OnButtonPressed(IRibbonControl control)
         {
             MessageBox.Show("Hello from control " + control.Id);
+            DataWriter.WriteData();
         }
     }
 }
