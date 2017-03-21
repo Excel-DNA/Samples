@@ -70,7 +70,7 @@ namespace Ribbon
 3. Press F5 to load and test.
 
 
-### Notes
+#### Notes
 
 * The ribbon class derives from the `ExcelDna.Integration.CustomUI.ExcelRibbon` base class. This is how Excel-DNA itentifies the class a defining a ribbon controller.
 
@@ -88,7 +88,7 @@ namespace Ribbon
 
 * Errors in the ribbon methods can cause Excel to mark the ribbon COM helper add-in as a 'Disabled Add-in'. This will reflect in the 'Disabled Add-ins' list under `File-> Options -> Add-Ins` under the `Manage` dropdown.
 
-### Ribbon xml and callback documentation
+#### Ribbon xml and callback documentation
 
 Excel-DNA is responsible for loading the ribbon helper add-in, but is not otherwise involved in the ribbon extension. This means that the custom UI xml schema, and the signatures for the callback methods are exactly as documented by Microsoft. The best documentation for these aspects can be found in the three-part series on 'Customizing the 2007 Office Fluent Ribbon for Developers':
 
@@ -169,13 +169,13 @@ namespace Ribbon
         public void OnButtonPressed(IRibbonControl control)
         {
             MessageBox.Show("Hello from control " + control.Id);
-			DataWriter.WriteData();
+            DataWriter.WriteData();
         }
 ```
 
 4. Press F5 to load and press the ribbon button to run the `WriteData` code.
 
-### Getting the root `Application` object
+#### Getting the root `Application` object
 
 A key call in the above code is to retrieve the root `Application` object that matches the Excel instance that is hosting the add-in. We call `ExcelDnaUtil.Application`, which returns an object that is always the correct `Application` COM object. Code that attempts to get the `Application` object in other ways, e.g. by calling `new Application()` might work in some cases, but there is a danger that the Excel instance returned is not that instance hosting the add-in.  
 
@@ -183,7 +183,7 @@ Once the root `Application` object is retrieved, the object model is accessed no
 
 * Don't confuse the types `Microsoft.Office.Interop.Excel.Application` that we use here with the WinForms type `System.Windows.Forms.Application`. You might use a namespace alias to distinguish these in your code.
 
-### Interop assembly versions
+#### Interop assembly versions
 
 Each version of Excel adds some extensions to the object model (and rarely, but sometimes removes some parts). The changes might be entire classes and interfaces, methods on an interface or parameters or a method. Most add-ins are expected to run on different Excel versions, so some care is needed to make sure only object models features available on all the target versions are used.
 
@@ -191,7 +191,7 @@ The simplest approach is to pick a minimum Excel version to support, and use the
 
 In this example we've installed the 'ExcelDna.Interop' NuGet package, which includes the interop assemblies for Excel 2010. This means features added in Excel 2013 and later will not be shown in the object model IntelliSense, ensuring that the add-in only uses features available on the minimum version. 
 
-### Correct COM / .NET interop usage
+#### Correct COM / .NET interop usage
 
 There is a lot of misinformation on the web about using the COM object model from .NET.
 
@@ -202,3 +202,15 @@ There is a lot of misinformation on the web about using the COM object model fro
 * Any guidance that mentions 'double-dots' is misleading. Sometimes this indicates that expressions calling into the object model should not chain object model access, i.e. to avoid code like `myWorkbook.Sheets[1].Range["A1"].Value = "abc". Such code is fine - just ignore any 'two dots' guidance.
 
 * I've posted some more details on these issues (in the context of automating Excel from another application) in a [Stack Overflow answer](http://stackoverflow.com/a/38111294/44264).
+
+## Further ribbon topics
+
+These are some more aspects of the ribbon extensions and COM object model, not yet dealt with:
+
+* Updating the ribbon, e.g. to trigger a `getEnabled` callback - the `onLoad` callback must be implemented to capture the ribbon interface during loading.
+
+* Adding images to the ribbon. Note the the `IPictureDisp` interface does not have to be used - any `Bitmap` type can be returned from the `getImage` callbacks. Excel-DNA has some support for packing image files into the .xll.
+
+* Using COM object model events.
+
+* Transitioning to the main thread (or a macro context) from another thread. Excel-DNA has a helper method `ExcelAsyncUtil.QueueAsMacro` that can be called from another thread or a timer event, to transition to a context where the object model can be reliably used.
