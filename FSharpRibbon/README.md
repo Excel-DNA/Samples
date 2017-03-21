@@ -10,6 +10,8 @@ The interesting code is in MyRibbon.fs
 * Copy the test code into Library1.fs
 * F5 to run and check that the funciton works in Excel
 * Add new file with the code in MyRibbon.fs
+* Add a reference to System.Windows.Forms.dll
+* Install-Package Excel-DNA.Interop
 * F5 to run and check that the ribbon is there and the buttons work
 
 ## Using the COM object model
