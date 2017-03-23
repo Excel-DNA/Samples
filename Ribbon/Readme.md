@@ -102,6 +102,10 @@ Information related to the Excel 2010 extensions to the ribbon can be found here
 * [Customizing the Office 2010 Backstage View](https://msdn.microsoft.com/en-us/library/office/ee815851.aspx)
 * [Ribbon Extensibility in Office 2010: Tab Activation and Auto-Scaling](https://msdn.microsoft.com/en-us/library/office/ee691834.aspx)
 
+Creating Dynamic Ribbon Customizations
+* [Part 1](https://msdn.microsoft.com/en-us/library/dd548010%28v=office.12%29.aspx)
+* [Part 2](https://msdn.microsoft.com/en-us/library/dd548011%28v=office.12%29.aspx)
+
 Other ribbon-related resources:
 
 * [Ron de Bruin's Excel Tips](http://www.rondebruin.nl/win/s2/win003.htm)
