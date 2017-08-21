@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Schedulers;
@@ -20,16 +21,19 @@ namespace LimitedConcurrencyAsync
 
         public static object Sleep(int seconds)
         {
+            Debug.Print($"Sleep Call: {seconds}");
             // The callerFunctionName and callerParameters are internally combined and used as a 'key' 
             // to link the underlying RTD calls together.
             string callerFunctionName = "Sleep";
             object callerParameters = new object[] {seconds}; // This need not be an array if it's just a single parameter
 
-            return AsyncTaskUtil.RunAsTask(callerFunctionName, callerParameters, _fourThreadFactory, () =>
+            var result = AsyncTaskUtil.RunAsTask(callerFunctionName, callerParameters, _fourThreadFactory, () =>
                 {
                     Thread.Sleep(seconds * 1000);
                     return "Slept on Thread " + Thread.CurrentThread.ManagedThreadId;
                 });
+            Debug.Print($"Sleep Result: {result}");
+            return result;
         }
 
         public static object SleepPerCaller(int seconds)
@@ -51,5 +55,7 @@ namespace LimitedConcurrencyAsync
                 });
             });
         }
+
+
     }
 }
