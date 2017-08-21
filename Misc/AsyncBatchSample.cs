@@ -1,3 +1,9 @@
+// To add the async / batch running into your code:
+// 1. Add the whole "AsyncBatchUtil" class from this file into your project.
+// 2. Create your own batch runner function, similar to the "RunBatch" method below.
+// 3. Create an instance of "AsyncBatchUtil" somewhere in your code (it's called "BatchRunner" below), passing in the batch parameters and batch runner from step 2.
+// 4. Create your worksheet functions like "SlowFunction" below, which call "BatchRunner.Run(...)" to run async as part of a batch.
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,12 +15,12 @@ using System.Net.Http;
 
 namespace GeneralTestsCS
 {
-    
-    public static class AysyncBatchExample
+    public static class AsyncBatchExample
     {
-        // 1. Create an instance on the AsyncBatchUtil, passing in some parameters and the btah running function.
+        // Step 3. from the list.
         static readonly AsyncBatchUtil BatchRunner = new AsyncBatchUtil(1000, TimeSpan.FromMilliseconds(250), RunBatch);
 
+        // Step 2. from the list.
         // This function will be called for each batch, on a ThreadPool thread.
         // Each AsyncCall contains the function name and arguments passed from the function.
         // The List<object> returned by the Task must contain the results, corresponding to the calls list.
@@ -42,21 +48,15 @@ namespace GeneralTestsCS
             return results;
         }
 
+        // Step 4. from the list.
         public static object SlowFunction(string code, int value)
         {
             return BatchRunner.Run("SlowFunction", code, value);
         }
     }
 
-
+    // Step 1. from the list.
     // This is the main helper class for supporting batched async calls
-    // To use:
-    // 1. Create an instance of AsyncBatchUtil, passing in a Func<List<AsyncCall>, Task<List<object>>> to run each batch.
-    // 2. Call from inside a batched function as:
-    //          public static object SlowFunction(string code, int value)
-    //          {
-    //              return BatchRunner.Run("SlowFunction", code, value);
-    //          }
     public class AsyncBatchUtil
     {
         // Represents a single function call in  a batch

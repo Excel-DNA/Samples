@@ -10,7 +10,7 @@ namespace Ribbon
         public override string GetCustomUI(string RibbonID)
         {
             return @"
-      <customUI xmlns='http://schemas.microsoft.com/office/2006/01/customui' loadImage='LoadImage'>
+      <customUI xmlns='http://schemas.microsoft.com/office/2006/01/customui'>
       <ribbon>
         <tabs>
           <tab id='tab1' label='My Tab'>
