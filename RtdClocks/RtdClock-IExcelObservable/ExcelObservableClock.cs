@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using ExcelDna.Integration;
 
@@ -40,6 +41,7 @@ namespace RtdClock_IExcelObservable
             public void Dispose()
             {
                 _disposeAction();
+                Debug.WriteLine("Disposed");
             }
         }
     }
