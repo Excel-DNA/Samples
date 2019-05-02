@@ -39,7 +39,6 @@ namespace Ribbon
             Range dataRange= ws.Range["A1:B101"];
             dataRange.Select();
             ws.Shapes.AddChart(XlChartType.xlLineMarkers).Select();
-            xlApp.ActiveChart.SetSourceData(Source: dataRange);
         }
     }
 }
