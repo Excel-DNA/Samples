@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DynamicCompiledVB", "DynamicCompiledVB.vbproj", "{CE9CB052-F3C7-4157-BF64-AB3B1574FEB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE9CB052-F3C7-4157-BF64-AB3B1574FEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE9CB052-F3C7-4157-BF64-AB3B1574FEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE9CB052-F3C7-4157-BF64-AB3B1574FEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE9CB052-F3C7-4157-BF64-AB3B1574FEB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7191FB8-22AF-4DED-A32A-741B05BD2CC7}
+	EndGlobalSection
+EndGlobal
