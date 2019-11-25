@@ -117,6 +117,8 @@
 
 * F5 to build and run Excel
 
+* (If this does not work due to tlbexp.exe not found, see [this discussion](https://groups.google.com/forum/#!topic/exceldna/XH3UbPwCnak).)
+
 * Open VBA IDE (Alt+F11)
 
 * Insert a new Module
