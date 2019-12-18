@@ -74,7 +74,7 @@ namespace Ribbon
 
 * The ribbon class derives from the `ExcelDna.Integration.CustomUI.ExcelRibbon` base class. This is how Excel-DNA itentifies the class a defining a ribbon controller.
 
-* The ribbon class must be 'COM visible'. Either the class must be marked as `[ComVisible(true)]` (the default class library template in Visual Studio markes the assembly as `[assembly:ComVisible(false)]`).
+* The ribbon class must be 'COM visible', to do so the class must be marked as `[ComVisible(true)]` (the default class library template in Visual Studio markes the assembly as `[assembly:ComVisible(false)]`).
 
 * The xml namespace is important. Excel 2007 introduced the ribbon, and support only the original xml namespace as shown in this example - `xmlns='http://schemas.microsoft.com/office/2006/01/customui'`. Further enhancements to the ribbon was made in Excel 2010, including using the ribbon for worksheet context menus and adding the backstage area. To indicate the extended Excel 2010 xml schema, this version and later supports an update namespace - `xmlns='http://schemas.microsoft.com/office/2009/07/customui'`.
 
