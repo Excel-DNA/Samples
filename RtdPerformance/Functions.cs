@@ -1,53 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using ExcelDna.Integration;
-using Microsoft.Office.Interop.Excel;
+﻿using ExcelDna.Integration;
 using static ExcelDna.Integration.XlCall;
 
 namespace RtdPerformance
 {
     public static class Functions
     {
-        static Application _xlApp;
-        static Functions()
+        public static object rtdHello()
         {
-            _xlApp = ExcelDnaUtil.Application as Application;
+            return "Hello from RtdPerformance Add-in!";
         }
 
-        public static object SayHello() => "Hello from RtdPerformance!";
-
-        public static object rtdClock(string topicInfo) => RTD(RtdServer.ServerProgId, null, topicInfo);
-
-        public static object rtdClockDirect(object topicInfo)
+        public static object rtdWrapper(object topic1, object topic2)
         {
-            var tis = topicInfo.ToString();
-            return $"{tis}:({tis.Length}) {Excel(xlfRtd, RtdServer.ServerProgId, null, topicInfo)}";
+            return Excel(xlfRtd, RtdServer.ServerProgId, "", topic1, topic2);
         }
 
-        public static object rtdClockArray(object topicInfo)
+        public static object rtdWrapperTestNulls(object topicInfo)
         {
-            Debug.Write(DateTime.Now);
-            var tis = topicInfo.ToString();
-            return new object[,] {{ $"{tis}:({tis.Length}) {Excel(xlfRtd, RtdServer.ServerProgId, null, topicInfo)}", tis.Length }};
+            return Excel(xlfRtd, RtdServer.ServerProgId, null, topicInfo, null, null, null);
         }
-
-        [ExcelFunction(IsThreadSafe = true)]
-        public static object rtdClockThreadSafe(object topicInfo) => Excel(xlfRtd, RtdServer.ServerProgId, null, topicInfo);
-
-
-        public static object rtdClockWsRtd(object topicInfo)
-        {
-            var tis = topicInfo.ToString();
-            return $"{tis}:({tis.Length}) {Excel(xlfRtd, RtdServer.ServerProgId, null, topicInfo)}";
-            _xlApp.WorksheetFunction.RTD(RtdServer.ServerProgId, null, topicInfo);
-        }
-
-        [ExcelFunction(IsThreadSafe = true)]
-        public static object timeDirect(object input) => DateTime.Now;
     }
 }

@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using ExcelDna.Integration.Rtd;
 
 namespace RtdPerformance
 {
-
     class DataService
     {
         Dictionary<int, ExcelRtdServer.Topic> _activeTopics;
@@ -41,8 +37,6 @@ namespace RtdPerformance
                 _activeTopics.Remove(topic.TopicId);
             }
         }
-
-
 
         public void Terminate()
         {

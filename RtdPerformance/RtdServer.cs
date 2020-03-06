@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading;
 using ExcelDna.Integration.Rtd;
 
 namespace RtdPerformance
@@ -11,7 +10,7 @@ namespace RtdPerformance
     [ProgId(RtdServer.ServerProgId)]     //  If ProgId is not specified, change the XlCall.RTD call in the wrapper to use namespace + type name (the default ProgId)
     public class RtdServer : ExcelRtdServer
     {
-        public const string ServerProgId = "RtdPerformance.ServerX";
+        public const string ServerProgId = "RtdPerformance.Server";
 
         static DataService _dataService;
 
