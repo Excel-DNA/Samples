@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DnaLibrary Name="RtdPerformance Add-In" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2018/05/dnalibrary">
-  <ExternalLibrary Path="RtdPerformance.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" IncludePdb="false" />
+<DnaLibrary Name="RtdPerformance-v110 Add-In" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2018/05/dnalibrary">
+  <ExternalLibrary Path="RtdPerformance-v110.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" IncludePdb="false" />
 
   <!--
        The RuntimeVersion attribute above allows two settings:

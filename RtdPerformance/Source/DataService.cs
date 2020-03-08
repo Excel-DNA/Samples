@@ -8,7 +8,7 @@ namespace RtdPerformance
 {
     class DataService
     {
-        Dictionary<int, ExcelRtdServer.Topic> _activeTopics;
+        List<ExcelRtdServer.Topic> _activeTopics;
         Thread _updateThread;
         Random _random;
 
@@ -17,7 +17,7 @@ namespace RtdPerformance
             _updateThread = new Thread(RunUpdates);
             _updateThread.Start();
 
-            _activeTopics = new Dictionary<int, ExcelRtdServer.Topic>();
+            _activeTopics = new List<ExcelRtdServer.Topic>();
             _random = new Random(1);
         }
 
@@ -25,7 +25,7 @@ namespace RtdPerformance
         {
             lock (_activeTopics)
             {
-                _activeTopics[topic.TopicId] = topic;
+                _activeTopics.Add(topic);
                 topic.UpdateValue($"ConnectData ({DateTime.Now.ToString("HH:mm:ss")}");
             }
         }
@@ -34,7 +34,7 @@ namespace RtdPerformance
         {
             lock (_activeTopics)
             {
-                _activeTopics.Remove(topic.TopicId);
+                _activeTopics.Remove(topic);
             }
         }
 
@@ -66,7 +66,7 @@ namespace RtdPerformance
             // string updateValue = DateTime.Now.ToString("HH:mm:ss.fff");
             lock (_activeTopics)
             {
-                foreach (var topic in _activeTopics.Values)
+                foreach (var topic in _activeTopics)
                 {
                     if (_random.Next(10) == 0)
                     {
