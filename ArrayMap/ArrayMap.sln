@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ArrayMap", "ArrayMap.vbproj", "{DC3CDD3B-01E8-4B86-A00F-A77DE4AE65EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC3CDD3B-01E8-4B86-A00F-A77DE4AE65EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC3CDD3B-01E8-4B86-A00F-A77DE4AE65EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC3CDD3B-01E8-4B86-A00F-A77DE4AE65EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC3CDD3B-01E8-4B86-A00F-A77DE4AE65EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A991342-25CE-45D6-9542-9314F94D3AB4}
+	EndGlobalSection
+EndGlobal
