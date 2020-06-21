@@ -60,11 +60,34 @@
     <Compile Include="MyCustomRibbon.cs" />
     <Compile Include="MyCustomRibbonRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RibbonResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RibbonResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="customUI.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="customui14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ExcelDna.DnaLibrary.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\ExcelDna.Build.props" />
     <None Include="GenericHost-AddIn.dna" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="RibbonResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RibbonResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\CustomUI.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\ExcelDna.AddIn.1.0.0\build\ExcelDna.AddIn.targets" Condition="Exists('..\packages\ExcelDna.AddIn.1.0.0\build\ExcelDna.AddIn.targets')" />

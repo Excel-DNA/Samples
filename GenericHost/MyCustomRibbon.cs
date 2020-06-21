@@ -28,18 +28,7 @@ namespace GenericHost
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
     public class MyCustomRibbon : ExcelComAddIn, IRibbonExtensibility
     {
-        public string GetCustomUI(string RibbonID) => @"
-          <customUI xmlns='http://schemas.microsoft.com/office/2006/01/customui'>
-          <ribbon>
-            <tabs>
-              <tab id='tab1' label='My Tab'>
-                <group id='group1' label='My Group'>
-                  <button id='button1' label='My Button' onAction='OnButtonPressed'/>
-                </group >
-              </tab>
-            </tabs>
-          </ribbon>
-        </customUI>";
+        public string GetCustomUI(string RibbonID) => RibbonResources.CustomUI;
 
         public void OnButtonPressed(IRibbonControl control)
         {
