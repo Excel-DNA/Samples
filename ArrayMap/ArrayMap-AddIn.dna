@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DnaLibrary Name="ArrayMap Add-In" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2018/05/dnalibrary">
   <ExternalLibrary Path="ArrayMap.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" IncludePdb="false" />
+  <Reference Path="ExcelDna.IntelliSense.dll" Pack="true" />
 </DnaLibrary>
