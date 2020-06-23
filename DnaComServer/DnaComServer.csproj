@@ -11,6 +11,8 @@
     <AssemblyName>DnaComServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExcelDna.Integration, Version=0.34.6373.42344, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ExcelDna.Integration.0.34.6\lib\ExcelDna.Integration.dll</HintPath>
+    <Reference Include="ExcelDna.Integration, Version=1.1.0.0, Culture=neutral, PublicKeyToken=f225e9659857edbe, processorArchitecture=MSIL">
+      <HintPath>packages\ExcelDna.Integration.1.1.0-beta2\lib\ExcelDna.Integration.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -58,7 +60,7 @@
 
 	REM Temporarily copy ExcelDna.Integration.dll into output
 	REM Note: Might need to change depending on where packages directory is
-	copy "$(ProjectDir)\packages\ExcelDna.Integration.0.34.6\lib\ExcelDna.Integration.dll" "$(TargetDir)"
+	copy "$(ProjectDir)\packages\ExcelDna.Integration.1.1.0-beta2\lib\ExcelDna.Integration.dll" "$(TargetDir)"
 
 	REM Create .tlb file
 	tlbexp.exe "$(ProjectDir)$(OutDir)$(TargetName)$(TargetExt)" /out:"$(ProjectDir)$(OutDir)$(TargetName).tlb"
@@ -68,16 +70,18 @@
 
 	REM Re-run the packing to include the .tlb inside the packed files for distribution
 	REM Note: Might need to change depending on where packages directory is
-	"$(ProjectDir)\packages\ExcelDna.AddIn.0.34.6\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn-packed.xll"
-	"$(ProjectDir)\packages\ExcelDna.AddIn.0.34.6\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64-packed.xll"
+	"$(ProjectDir)\packages\ExcelDna.AddIn.1.1.0-beta2\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn-packed.xll"
+	"$(ProjectDir)\packages\ExcelDna.AddIn.1.1.0-beta2\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64-packed.xll"
 
 	REM Register COM servers in add-in on this machine for testing
 	REM Note: Change this to -AddIn64.xll if the 64-bit version of Excel is installed
 	regsvr32.exe /s "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.xll"</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="packages\ExcelDna.AddIn.0.34.6\tools\ExcelDna.AddIn.targets" Condition="Exists('packages\ExcelDna.AddIn.0.34.6\tools\ExcelDna.AddIn.targets')" />
-  <Target Name="EnsureExcelDnaTargetsImported" BeforeTargets="BeforeBuild" Condition="'$(ExcelDnaTargetsImported)' == ''">
-    <Error Condition="!Exists('packages\ExcelDna.AddIn.0.34.6\tools\ExcelDna.AddIn.targets') And ('$(RunExcelDnaBuild)' != '' And $(RunExcelDnaBuild))" Text="You are trying to build with ExcelDna, but the NuGet targets file that ExcelDna depends on is not available on this computer. This is probably because the ExcelDna package has not been committed to source control, or NuGet Package Restore is not enabled. Please enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('packages\ExcelDna.AddIn.0.34.6\tools\ExcelDna.AddIn.targets') And ('$(RunExcelDnaBuild)' != '' And $(RunExcelDnaBuild))" Text="ExcelDna cannot be run because NuGet packages were restored prior to the build running, and the targets file was unavailable when the build started. Please build the project again to include these packages in the build. You may also need to make sure that your build server does not delete packages prior to each build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  <Import Project="packages\ExcelDna.AddIn.1.1.0-beta2\build\ExcelDna.AddIn.targets" Condition="Exists('packages\ExcelDna.AddIn.1.1.0-beta2\build\ExcelDna.AddIn.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\ExcelDna.AddIn.1.1.0-beta2\build\ExcelDna.AddIn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ExcelDna.AddIn.1.1.0-beta2\build\ExcelDna.AddIn.targets'))" />
   </Target>
 </Project>

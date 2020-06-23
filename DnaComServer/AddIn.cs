@@ -18,7 +18,22 @@ namespace DnaComServer
             return x + y;
         }
     }
-    
+
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    public class ComLibrary2
+    {
+        public string ComLibrary2Hello()
+        {
+            return "Hello from DnaComServer.ComLibrary2";
+        }
+
+        public double Add2(double x, double y)
+        {
+            return x + y;
+        }
+    }
+
     [ComVisible(false)]
     public class ExcelAddin : IExcelAddIn
     {
