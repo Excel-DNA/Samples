@@ -11,7 +11,6 @@
     <AssemblyName>UsingSQLite</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>7de79e02</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,13 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExcelDna.Integration">
-      <HintPath>packages\Excel-DNA.Lib.0.32.0\lib\ExcelDna.Integration.dll</HintPath>
+    <Reference Include="ExcelDna.Integration, Version=1.0.7056.37028, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ExcelDna.Integration.1.0.0\lib\ExcelDna.Integration.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite">
+    <Reference Include="System.Data.SQLite, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>packages\System.Data.SQLite.Core.1.0.96.0\lib\net40\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -51,26 +50,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UsingSQLite-AddIn.dna">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
+    <None Include="Properties\ExcelDna.Build.props" />
+    <None Include="UsingSQLite-AddIn.dna" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDna.xll" "$(TargetDir)UsingSQLite-AddIn.xll*" /C /Y
-xcopy "$(TargetDir)UsingSQLite-AddIn.dna*" "$(TargetDir)UsingSQLite-AddIn64.dna*" /C /Y
-xcopy "$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDna64.xll" "$(TargetDir)UsingSQLite-AddIn64.xll*" /C /Y
-"$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDnaPack.exe" "$(TargetDir)UsingSQLite-AddIn.dna" /Y
-"$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDnaPack.exe" "$(TargetDir)UsingSQLite-AddIn64.dna" /Y</PostBuildEvent>
-  </PropertyGroup>
   <Import Project="packages\System.Data.SQLite.Core.1.0.96.0\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('packages\System.Data.SQLite.Core.1.0.96.0\build\net40\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\System.Data.SQLite.Core.1.0.96.0\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.Data.SQLite.Core.1.0.96.0\build\net40\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('packages\ExcelDna.AddIn.1.0.0\build\ExcelDna.AddIn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ExcelDna.AddIn.1.0.0\build\ExcelDna.AddIn.targets'))" />
   </Target>
+  <Import Project="packages\ExcelDna.AddIn.1.0.0\build\ExcelDna.AddIn.targets" Condition="Exists('packages\ExcelDna.AddIn.1.0.0\build\ExcelDna.AddIn.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
