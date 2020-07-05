@@ -69,10 +69,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "C:\Work\Excel-DNA\Samples\RtdPerformance\packages\Excel-DNA.0.32.1-beta2\tools\ExcelDna.xll" "$(TargetDir)RtdPerformance-v032-AddIn.xll*" /C /Y
+    <PostBuildEvent>xcopy "$(ProjectDir)..\packages\Excel-DNA.0.32.1-beta2\tools\ExcelDna.xll" "$(TargetDir)RtdPerformance-v032-AddIn.xll*" /C /Y
 xcopy "$(TargetDir)RtdPerformance-v032-AddIn.dna*" "$(TargetDir)RtdPerformance-v032-AddIn64.dna*" /C /Y
-xcopy "C:\Work\Excel-DNA\Samples\RtdPerformance\packages\Excel-DNA.0.32.1-beta2\tools\ExcelDna64.xll" "$(TargetDir)RtdPerformance-v032-AddIn64.xll*" /C /Y
-"C:\Work\Excel-DNA\Samples\RtdPerformance\packages\Excel-DNA.0.32.1-beta2\tools\ExcelDnaPack.exe" "$(TargetDir)RtdPerformance-v032-AddIn.dna" /Y
-"C:\Work\Excel-DNA\Samples\RtdPerformance\packages\Excel-DNA.0.32.1-beta2\tools\ExcelDnaPack.exe" "$(TargetDir)RtdPerformance-v032-AddIn64.dna" /Y</PostBuildEvent>
+xcopy "$(ProjectDir)..\packages\Excel-DNA.0.32.1-beta2\tools\ExcelDna64.xll" "$(TargetDir)RtdPerformance-v032-AddIn64.xll*" /C /Y
+"$(ProjectDir)..\packages\Excel-DNA.0.32.1-beta2\tools\ExcelDnaPack.exe" "$(TargetDir)RtdPerformance-v032-AddIn.dna" /Y
+"$(ProjectDir)..\packages\Excel-DNA.0.32.1-beta2\tools\ExcelDnaPack.exe" "$(TargetDir)RtdPerformance-v032-AddIn64.dna" /Y
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
