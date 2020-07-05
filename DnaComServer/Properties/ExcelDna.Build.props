@@ -52,6 +52,13 @@
     <ExcelDna64BitAddInSuffix Condition="'$(ExcelDna64BitAddInSuffix)' == ''">64</ExcelDna64BitAddInSuffix>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!--
+      Enable/Disable using Excel-DNA with PackageReference projects (not officially supported)
+    -->
+    <ExcelDnaAllowPackageReferenceProjectStyle Condition="'$(ExcelDnaAllowPackageReferenceProjectStyle)' == ''">false</ExcelDnaAllowPackageReferenceProjectStyle>
+  </PropertyGroup>
+
   <!--
     Configuration properties for packing .dna files
   -->
@@ -59,7 +66,7 @@
     <!--
       Enable/Disable packing of .dna files
     -->
-    <RunExcelDnaPack Condition="'$(RunExcelDnaPack)' == ''">true</RunExcelDnaPack>
+    <RunExcelDnaPack Condition="'$(RunExcelDnaPack)' == ''">false</RunExcelDnaPack>
 
     <!--
       Suffix used for packed .xll files e.g. MyAddIn-packed.xll
