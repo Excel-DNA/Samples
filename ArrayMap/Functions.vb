@@ -1,5 +1,6 @@
 ﻿Imports ExcelDna.Integration
 Imports ExcelDna.Integration.XlCall
+Imports Microsoft.VisualBasic.FileIO
 
 Public Module Functions
 
@@ -118,6 +119,85 @@ Public Module Functions
     <ExcelFunction(IsHidden:=True)>
     Function Describe2(x, y)
         Return x.ToString() & "|" & y.ToString()
+    End Function
+
+    <ExcelFunction(Name:="ARRAY.FROMFILE", Description:="Reads the contents of a delimited file")>
+    Function ArrayFromFile(<ExcelArgument("Full path to the file to read")> Path As String,
+                           <ExcelArgument(Name:="[SkipHeader]", Description:="Skips the first line of the file - default False")> skipHeader As Object,
+                           <ExcelArgument(Name:="[Delimiter]", Description:="Sets the delimiter to accept - default ','")> delimiter As Object)
+
+        Dim lines As New List(Of String())
+
+        Using csvParser As New TextFieldParser(Path)
+
+
+            If TypeOf delimiter Is ExcelMissing Then
+                csvParser.SetDelimiters(New String() {","})
+            Else
+                csvParser.SetDelimiters(New String() {delimiter})   ' TODO: Accept multiple ?
+            End If
+
+            csvParser.CommentTokens = New String() {"#"}
+            csvParser.HasFieldsEnclosedInQuotes = True
+
+            If Not TypeOf skipHeader Is ExcelMissing AndAlso (skipHeader = True OrElse skipHeader = 1) Then
+                csvParser.ReadLine()
+            End If
+
+            Do While csvParser.EndOfData = False
+                lines.Add(csvParser.ReadFields())
+            Loop
+        End Using
+
+        If lines.Count = 0 Then
+            Return ""
+        End If
+
+        Dim result(lines.Count - 1, lines(0).Length - 1) As Object
+        For i As Integer = 0 To lines.Count - 1
+            For j As Integer = 0 To lines(0).Length - 1
+                result(i, j) = lines(i)(j)
+            Next j
+        Next i
+        Return result
+
+    End Function
+
+    <ExcelFunction(Name:="ARRAY.SKIPROWS", Description:="Returns the remainder of an array after skipping the first n rows")>
+    Function ArraySkipRows(<ExcelArgument(AllowReference:=True)> array As Object, rowsToSkip As Integer)
+        If TypeOf array Is ExcelReference Then
+            Dim arrayRef As ExcelReference = array
+            Return New ExcelReference(arrayRef.RowFirst + rowsToSkip, arrayRef.RowLast, arrayRef.ColumnFirst, arrayRef.ColumnLast, arrayRef.SheetId)
+        ElseIf TypeOf array Is Object(,) Then
+            Dim arrayIn As Object(,) = array
+            Dim result(array.GetLength(0) - rowsToSkip - 1, array.GetLength(1) - 1) As Object
+            For i As Integer = 0 To result.GetLength(0) - rowsToSkip - 1
+                For j As Integer = 0 To result.GetLength(1) - 1
+                    result(i, j) = arrayIn(i + rowsToSkip, j)
+                Next j
+            Next i
+            Return result
+        Else
+            Return array
+        End If
+    End Function
+
+    <ExcelFunction(Name:="ARRAY.COLUMN", Description:="Returns a specified column from an array")>
+    Function ArrayColumn(<ExcelArgument(AllowReference:=True)> array As Object, <ExcelArgument("One-based column index to select")> ColIndex As Integer)
+        If TypeOf array Is ExcelReference Then
+            Dim arrayRef As ExcelReference = array
+            Return New ExcelReference(arrayRef.RowFirst, arrayRef.RowLast, arrayRef.ColumnFirst + ColIndex - 1, arrayRef.ColumnFirst + ColIndex - 1, arrayRef.SheetId)
+        ElseIf TypeOf array Is Object(,) Then
+            Dim arrayIn As Object(,) = array
+            Dim result(array.GetLength(0) - 1, 1) As Object
+            Dim j As Integer = ColIndex - 1
+            For i As Integer = 0 To result.GetLength(0) - 1
+                result(i, 0) = arrayIn(i, j)
+            Next i
+            Return result
+        Else
+            Return array
+        End If
     End Function
 
 End Module
