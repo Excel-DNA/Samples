@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncHelloWorld", "ClassLibrary1\AsyncHelloWorld.csproj", "{8A824595-AF85-4375-B814-FB8D45AE0E17}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncHelloWorld", "AsyncHelloWorld\AsyncHelloWorld.csproj", "{8A824595-AF85-4375-B814-FB8D45AE0E17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

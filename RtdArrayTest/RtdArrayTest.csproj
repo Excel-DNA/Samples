@@ -30,9 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExcelDna.Integration">
-      <HintPath>packages\Excel-DNA.Lib.0.32.0\lib\ExcelDna.Integration.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ExcelDna.Integration, Version=1.1.0.0, Culture=neutral, PublicKeyToken=f225e9659857edbe, processorArchitecture=MSIL">
+      <HintPath>packages\ExcelDna.Integration.1.1.0\lib\ExcelDna.Integration.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,20 +47,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RtdArrayTest-AddIn.dna">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
+    <None Include="Properties\ExcelDna.Build.props" />
+    <None Include="RtdArrayTest-AddIn.dna" />
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDna.xll" "$(TargetDir)RtdArrayTest-AddIn.xll*" /C /Y
-xcopy "$(TargetDir)RtdArrayTest-AddIn.dna*" "$(TargetDir)RtdArrayTest-AddIn64.dna*" /C /Y
-xcopy "$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDna64.xll" "$(TargetDir)RtdArrayTest-AddIn64.xll*" /C /Y
-"$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDnaPack.exe" "$(TargetDir)RtdArrayTest-AddIn.dna" /Y
-"$(ProjectDir)packages\Excel-DNA.0.32.0\tools\ExcelDnaPack.exe" "$(TargetDir)RtdArrayTest-AddIn64.dna" /Y</PostBuildEvent>
-  </PropertyGroup>
+  <Import Project="packages\ExcelDna.AddIn.1.1.1\build\ExcelDna.AddIn.targets" Condition="Exists('packages\ExcelDna.AddIn.1.1.1\build\ExcelDna.AddIn.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\ExcelDna.AddIn.1.1.1\build\ExcelDna.AddIn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ExcelDna.AddIn.1.1.1\build\ExcelDna.AddIn.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
