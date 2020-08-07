@@ -13,7 +13,7 @@ namespace Uploader
     {
         // UploadCreate is the worksheet function
         // It reads the caller, which we need to track for the UploadSelection option, 
-        // gathers all the arguments and then starts the RTD tracking with a call to ExccelAsyncUtil.Observe.
+        // gathers all the arguments and then starts the RTD tracking with a call to ExcelAsyncUtil.Observe.
         //
         // There can be many more arguments
         // We might experiment with AllowReference=true for the arguments
@@ -71,9 +71,9 @@ namespace Uploader
     //    The IDisposable directly on this class is a small hack - see the comment at "Subscribe"
     class UploadItem : IExcelObservable, IDisposable
     {
-        public UploadStatus Status;
-        readonly public object[] Arguments;
-        public ExcelReference Caller; // Just a convenience
+        public ExcelReference Caller { get; }
+        public object[] Arguments { get; }
+        public UploadStatus Status { get; private set; }
 
         // This method will always be called on the main thread
         public UploadItem(ExcelReference caller, object[] arguments)
@@ -93,12 +93,12 @@ namespace Uploader
         }
 
         // We're implementing against the simpler requirements of the IExcelObservable,
-        // where we can assume that Subscribe sill be called at most once,
+        // where we can assume that Subscribe will be called at most once,
         // and so we can also implement IDisposable directly here.
         // A more complicated implementation for this (list of IObservers, separate IDisposable object)
         // could be like normal IObservable implementations, hence easier to understand.
         IExcelObserver _observer;
-        public IDisposable Subscribe(IExcelObserver observer)
+        IDisposable IExcelObservable.Subscribe(IExcelObserver observer)
         {
             Debug.Assert(_observer == null);
             _observer = observer;
@@ -107,7 +107,7 @@ namespace Uploader
         }
 
         // This method will always be called on the main thread
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             UploadManager.NotifyDispose(this);
         }
@@ -185,7 +185,7 @@ namespace Uploader
         }
 
         // 5. This part is where the UploadManager ships off the items for doing the real upload.
-        //    The need to then transition the UploadItem.Status to a CompletedXXXX state
+        //    The handler then needs to transition the UploadItem.Status to a CompletedXXXX state
         //    The UploadItem.SetStatus can be called from any thread, and will then update through to the sheet.
         // For the example I just put in a random delay and result
         // The real implementation might process items all at once, or in batches too, not a task for every item.
@@ -195,7 +195,7 @@ namespace Uploader
             {
                 Task.Run(async () =>
                 {
-                    // Randon delay and result
+                    // Random delay and result
                     await Task.Delay(random.Next(10000));
                     if (random.Next(3) == 1)
                         item.SetStatus(UploadStatus.CompletedError);
