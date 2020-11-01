@@ -2,6 +2,8 @@
 
 _**Note: The Excel-DNA Testing Helper is in an early preview stage, and the design and functionality might change a lot in future. If you try it and have any feedback at all, positive or 'constructive' please let me know at govert@icon.co.za. If you already practice automated testing extensively I am particularly eager to hear of any suggestions you might have.**_
 
+[![Excel-DNA Testing Helper - Preview](http://img.youtube.com/vi/rUP15u9Z0ik/0.jpg)](http://www.youtube.com/watch?v=rUP15u9Z0ik "Excel-DNA Testing Helper - Preview")
+
 `ExcelDna.Testing` is a NuGet package and library that lets you develop automatic tests for Excel models and add-ins, including add-ins developed with Excel-DNA and VBA. Test code is written in C# or Visual Basic and is hosted by the popular [xUnit](https://xunit.net/) test framework, allowing automated tests to run from Visual Stuio or other standard test runners.
 
 Tests developed with the testing helper will run with the add-in loaded inside an Excel instance, and so allow you to test the interaction between an add-in and a real instance of Excel. This type of 'integration testing' can augment 'unit testing' where individual library features are tested in isolation. It is often in the interaction with Excel where the problematic aspects of an add-in are revealed, and developing automated testing for this environment has been difficult.
