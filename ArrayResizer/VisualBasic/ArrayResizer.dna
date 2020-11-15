@@ -1,0 +1,5 @@
+<DnaLibrary RuntimeVersion="v4.0">
+  <Project Language="VB" >
+    <SourceItem Name="ArrayResizer.vb" />
+  </Project>
+</DnaLibrary>
