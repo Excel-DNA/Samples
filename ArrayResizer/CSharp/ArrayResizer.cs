@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using ExcelDna.Integration;
-using static ExcelDna.Integration.XlCall;
 
 namespace AsyncFunctions
 {
@@ -79,19 +78,26 @@ namespace AsyncFunctions
         // Needs extra protection to allow multithreaded use.
         public static object dnaResize(object[,] array)
         {
-            // For dynamic-array aware Excel we don't do anything
-            if (UtilityFunctions.dnaSupportsDynamicArrays())
-                return array;
-
-            var caller = Excel(xlfCaller) as ExcelReference;
+            var caller = XlCall.Excel(XlCall.xlfCaller) as ExcelReference;
             if (caller == null)
+            {
                 return array;
+            }
 
             int rows = array.GetLength(0);
             int columns = array.GetLength(1);
 
             if (rows == 0 || columns == 0)
                 return array;
+
+            // For dynamic-array aware Excel we don't do anything if the caller is a single cell
+            // Excel will expand in this case
+            if (UtilityFunctions.dnaSupportsDynamicArrays() &&
+                caller.RowFirst == caller.RowLast &&
+                caller.ColumnFirst == caller.ColumnLast)
+            {
+                return array;
+            }
 
             if ((caller.RowLast - caller.RowFirst + 1 == rows) &&
                 (caller.ColumnLast - caller.ColumnFirst + 1 == columns))
@@ -125,19 +131,28 @@ namespace AsyncFunctions
 
         public static double[,] dnaResizeDoubles(double[,] array)
         {
-            // For dynamic-array aware Excel we don't do anything
-            if (UtilityFunctions.dnaSupportsDynamicArrays())
-                return array;
-
-            var caller = Excel(xlfCaller) as ExcelReference;
+            var caller = XlCall.Excel(XlCall.xlfCaller) as ExcelReference;
             if (caller == null)
+            {
                 return array;
+            }
 
             int rows = array.GetLength(0);
             int columns = array.GetLength(1);
 
             if (rows == 0 || columns == 0)
+            {
                 return array;
+            }
+
+            // For dynamic-array aware Excel we don't do anything if the caller is a single cell
+            // Excel will expand in this case
+            if (UtilityFunctions.dnaSupportsDynamicArrays() &&
+                caller.RowFirst == caller.RowLast &&
+                caller.ColumnFirst == caller.ColumnLast)
+            {
+                return array;
+            }
 
             if ((caller.RowLast - caller.RowFirst + 1 == rows) &&
                 (caller.ColumnLast - caller.ColumnFirst + 1 == columns))
@@ -164,6 +179,7 @@ namespace AsyncFunctions
                 var target = new ExcelReference(caller.RowFirst, rowLast, caller.ColumnFirst, columnLast, caller.SheetId);
                 DoResize(target); // Will trigger a recalc by writing formula
             });
+
             // Return what we have - to prevent flashing #N/A
             return array;
         }
@@ -177,31 +193,31 @@ namespace AsyncFunctions
                 ExcelReference firstCell = new ExcelReference(target.RowFirst, target.RowFirst, target.ColumnFirst, target.ColumnFirst, target.SheetId);
 
                 // Get the formula in the first cell of the target
-                string formula = (string)Excel(xlfGetCell, 41, firstCell);
-                bool isFormulaArray = (bool)Excel(xlfGetCell, 49, firstCell);
+                string formula = (string)XlCall.Excel(XlCall.xlfGetCell, 41, firstCell);
+                bool isFormulaArray = (bool)XlCall.Excel(XlCall.xlfGetCell, 49, firstCell);
                 if (isFormulaArray)
                 {
                     // Select the sheet and firstCell - needed because we want to use SelectSpecial.
                     using (new ExcelSelectionHelper(firstCell))
                     {
                         // Extend the selection to the whole array and clear
-                        Excel(xlcSelectSpecial, 6);
-                        ExcelReference oldArray = (ExcelReference)Excel(xlfSelection);
+                        XlCall.Excel(XlCall.xlcSelectSpecial, 6);
+                        ExcelReference oldArray = (ExcelReference)XlCall.Excel(XlCall.xlfSelection);
 
                         oldArray.SetValue(ExcelEmpty.Value);
                     }
                 }
                 // Get the formula and convert to R1C1 mode
-                bool isR1C1Mode = (bool)Excel(xlfGetWorkspace, 4);
+                bool isR1C1Mode = (bool)XlCall.Excel(XlCall.xlfGetWorkspace, 4);
                 string formulaR1C1 = formula;
                 if (!isR1C1Mode)
                 {
                     object formulaR1C1Obj;
-                    XlReturn formulaR1C1Return = TryExcel(xlfFormulaConvert, out formulaR1C1Obj, formula, true, false, ExcelMissing.Value, firstCell);
-                    if (formulaR1C1Return != XlReturn.XlReturnSuccess || formulaR1C1Obj is ExcelError)
+                    XlCall.XlReturn formulaR1C1Return = XlCall.TryExcel(XlCall.xlfFormulaConvert, out formulaR1C1Obj, formula, true, false, ExcelMissing.Value, firstCell);
+                    if (formulaR1C1Return != XlCall.XlReturn.XlReturnSuccess || formulaR1C1Obj is ExcelError)
                     {
-                        string firstCellAddress = (string)Excel(xlfReftext, firstCell, true);
-                        Excel(xlcAlert, "Cannot resize array formula at " + firstCellAddress + " - formula might be too long when converted to R1C1 format.");
+                        string firstCellAddress = (string)XlCall.Excel(XlCall.xlfReftext, firstCell, true);
+                        XlCall.Excel(XlCall.xlcAlert, "Cannot resize array formula at " + firstCellAddress + " - formula might be too long when converted to R1C1 format.");
                         firstCell.SetValue("'" + formula);
                         return;
                     }
@@ -210,15 +226,15 @@ namespace AsyncFunctions
                 // Must be R1C1-style references
                 object ignoredResult;
                 //Debug.Print("Resizing START: " + target.RowLast);
-                XlReturn formulaArrayReturn = TryExcel(xlcFormulaArray, out ignoredResult, formulaR1C1, target);
+                XlCall.XlReturn formulaArrayReturn = XlCall.TryExcel(XlCall.xlcFormulaArray, out ignoredResult, formulaR1C1, target);
                 //Debug.Print("Resizing FINISH");
 
                 // TODO: Find some dummy macro to clear the undo stack
 
-                if (formulaArrayReturn != XlReturn.XlReturnSuccess)
+                if (formulaArrayReturn != XlCall.XlReturn.XlReturnSuccess)
                 {
-                    string firstCellAddress = (string)Excel(xlfReftext, firstCell, true);
-                    Excel(xlcAlert, "Cannot resize array formula at " + firstCellAddress + " - result might overlap another array.");
+                    string firstCellAddress = (string)XlCall.Excel(XlCall.xlfReftext, firstCell, true);
+                    XlCall.Excel(XlCall.xlcAlert, "Cannot resize array formula at " + firstCellAddress + " - result might overlap another array.");
                     // Might have failed due to array in the way.
                     firstCell.SetValue("'" + formula);
                 }
@@ -234,13 +250,13 @@ namespace AsyncFunctions
 
         public ExcelEchoOffHelper()
         {
-            oldEcho = Excel(xlfGetWorkspace, 40);
-            Excel(xlcEcho, false);
+            oldEcho = XlCall.Excel(XlCall.xlfGetWorkspace, 40);
+            XlCall.Excel(XlCall.xlcEcho, false);
         }
 
         public void Dispose()
         {
-            Excel(xlcEcho, oldEcho);
+            XlCall.Excel(XlCall.xlcEcho, oldEcho);
         }
     }
 
@@ -250,13 +266,13 @@ namespace AsyncFunctions
 
         public ExcelCalculationManualHelper()
         {
-            oldCalculationMode = Excel(xlfGetDocument, 14);
-            Excel(xlcOptionsCalculation, 3);
+            oldCalculationMode = XlCall.Excel(XlCall.xlfGetDocument, 14);
+            XlCall.Excel(XlCall.xlcOptionsCalculation, 3);
         }
 
         public void Dispose()
         {
-            Excel(xlcOptionsCalculation, oldCalculationMode);
+            XlCall.Excel(XlCall.xlcOptionsCalculation, oldCalculationMode);
         }
     }
 
@@ -274,32 +290,32 @@ namespace AsyncFunctions
         public ExcelSelectionHelper(ExcelReference refToSelect)
         {
             // Remember old selection state on the active sheet
-            oldSelectionOnActiveSheet = Excel(xlfSelection);
-            oldActiveCellOnActiveSheet = Excel(xlfActiveCell);
+            oldSelectionOnActiveSheet = XlCall.Excel(XlCall.xlfSelection);
+            oldActiveCellOnActiveSheet = XlCall.Excel(XlCall.xlfActiveCell);
 
             // Switch to the sheet we want to select
-            string refSheet = (string)Excel(xlSheetNm, refToSelect);
-            Excel(xlcWorkbookSelect, new object[] { refSheet });
+            string refSheet = (string)XlCall.Excel(XlCall.xlSheetNm, refToSelect);
+            XlCall.Excel(XlCall.xlcWorkbookSelect, new object[] { refSheet });
 
             // record selection and active cell on the sheet we want to select
-            oldSelectionOnRefSheet = Excel(xlfSelection);
-            oldActiveCellOnRefSheet = Excel(xlfActiveCell);
+            oldSelectionOnRefSheet = XlCall.Excel(XlCall.xlfSelection);
+            oldActiveCellOnRefSheet = XlCall.Excel(XlCall.xlfActiveCell);
 
             // make the selection
-            Excel(xlcFormulaGoto, refToSelect);
+            XlCall.Excel(XlCall.xlcFormulaGoto, refToSelect);
         }
 
         public void Dispose()
         {
             // Reset the selection on the target sheet
-            Excel(xlcSelect, oldSelectionOnRefSheet, oldActiveCellOnRefSheet);
+            XlCall.Excel(XlCall.xlcSelect, oldSelectionOnRefSheet, oldActiveCellOnRefSheet);
 
             // Reset the sheet originally selected
-            string oldActiveSheet = (string)Excel(xlSheetNm, oldSelectionOnActiveSheet);
-            Excel(xlcWorkbookSelect, new object[] { oldActiveSheet });
+            string oldActiveSheet = (string)XlCall.Excel(XlCall.xlSheetNm, oldSelectionOnActiveSheet);
+            XlCall.Excel(XlCall.xlcWorkbookSelect, new object[] { oldActiveSheet });
 
             // Reset the selection in the active sheet (some bugs make this change sometimes too)
-            Excel(xlcSelect, oldSelectionOnActiveSheet, oldActiveCellOnActiveSheet);
+            XlCall.Excel(XlCall.xlcSelect, oldSelectionOnActiveSheet, oldActiveCellOnActiveSheet);
         }
     }
 

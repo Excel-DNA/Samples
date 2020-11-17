@@ -1,5 +1,5 @@
 <DnaLibrary RuntimeVersion="v4.0">
   <Project Language="C#" >
-    <SourceItem Name="ArrayResizer.cs" />
+    <SourceItem Path="ArrayResizer.cs" />
   </Project>
 </DnaLibrary>

@@ -55,10 +55,6 @@ Namespace AsyncFunctions
 		' Needs extra protection to allow multithreaded use.
 		Public Function dnaResize(array As Object(,)) As Object
 
-			' Nothing to do if Excel already supports Dynamic Arrays
-			If UtilityFunctions.dnaSupportsDynamicArrays() Then
-				Return array
-			End If
 
 			Dim caller As ExcelReference = TryCast(Excel(xlfCaller), ExcelReference)
 			If caller Is Nothing Then
@@ -69,6 +65,11 @@ Namespace AsyncFunctions
 			Dim columns As Integer = array.GetLength(1)
 
 			If rows = 0 OrElse columns = 0 Then
+				Return array
+			End If
+
+			' Nothing to do if Excel already supports Dynamic Arrays, and we get a single cell caller
+			If UtilityFunctions.dnaSupportsDynamicArrays() AndAlso caller.RowFirst = caller.RowLast AndAlso caller.ColumnFirst = caller.ColumnLast Then
 				Return array
 			End If
 
@@ -219,15 +220,16 @@ Namespace AsyncFunctions
 		Public Function dnaSupportsDynamicArrays() As Boolean
 			Static supportsDynamicArrays? As Boolean
 
-			If Not _supportsDynamicArrays.HasValue Then
+			If Not supportsDynamicArrays.HasValue Then
 				Try
 					Dim result = XlCall.Excel(614, New Object() {1}, New Object() {True})
-					_supportsDynamicArrays = True
+					supportsDynamicArrays = True
 
 				Catch
-					_supportsDynamicArrays = False
+					supportsDynamicArrays = False
 				End Try
 			End If
-			Return _supportsDynamicArrays.Value
-    End Module
+			Return supportsDynamicArrays.Value
+		End Function
+	End Module
 End Namespace
