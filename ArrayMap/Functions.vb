@@ -70,29 +70,73 @@ Public Module Functions
 
         ' Now we know both input1 and input2 are arrays
         ' We assume they are 1D, else error
-        If input1.GetLength(0) > 1 Then
 
-            ' Lots of rows in input1, we'll take it's first column only, and take the columns input1
-            Dim output(input1.GetLength(0) - 1, input2.GetLength(1) - 1) As Object
+        Return ArrayEvaluate2(evaluate, input1, input2)
 
-            For i As Integer = 0 To input1.GetLength(0) - 1
-                For j As Integer = 0 To input2.GetLength(1) - 1
-                    output(i, j) = evaluate(input1(i, 0), input2(0, j))
-                Next
-            Next
-            Return output
+    End Function
+
+    <ExcelFunction(Name:="ARRAY.MAP3", Description:="Evaluates the three-argument function for arrays values. ")>
+    Function ArrayMap3(
+                     <ExcelArgument(Description:="The function to evaluate - either enter the name without any quotes or brackets (for .xll functions), or as a string (for VBA functions)")>
+                     [function] As Object,
+                     <ExcelArgument(Description:="The input value(s) for the first argument (row, column or rectangular range) ")>
+                     input1 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the second argument (row, column or rectangular range) ")>
+                     input2 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the third argument (row, column or rectangular range) ")>
+                     input3 As Object)
+
+        Dim inputArray1 As Object
+        Dim inputArray2 As Object
+
+        Dim evaluate As Func(Of Object, Object, Object)
+
+        Dim functionID As Object
+
+        If TypeOf [function] Is Double Then
+            functionID = [function]
+        ElseIf TypeOf [function] Is String Then
+            ' First try to get the RegisterId, if it's an .xll UDF
+            Dim registerId As Object
+            registerId = Excel(xlfEvaluate, [function])
+            If TypeOf registerId Is Double Then
+                functionID = registerId
+            Else
+                ' Just call as string, hoping it's a valid VBA function
+                functionID = [function]
+            End If
         Else
-
-            ' Single row in input1, we'll take it's columns, and take the rows from input2
-            Dim output(input2.GetLength(0) - 1, input1.GetLength(1) - 1) As Object
-
-            For i As Integer = 0 To input2.GetLength(0) - 1
-                For j As Integer = 0 To input1.GetLength(1) - 1
-                    output(i, j) = evaluate(input1(0, j), input2(i, 0))
-                Next
-            Next
-            Return output
+            Return ExcelError.ExcelErrorValue
         End If
+
+        If Not TypeOf input1 Is Object(,) Then
+            evaluate = Function(x, y) Excel(xlUDF, functionID, input1, x, y)
+            inputArray1 = input2
+            inputArray2 = input3
+        ElseIf Not TypeOf input2 Is Object(,) Then
+            evaluate = Function(x, y) Excel(xlUDF, functionID, x, input2, y)
+            inputArray1 = input1
+            inputArray2 = input3
+        ElseIf Not TypeOf input3 Is Object(,) Then
+            evaluate = Function(x, y) Excel(xlUDF, functionID, x, y, input3)
+            inputArray1 = input1
+            inputArray2 = input2
+        Else
+            Return ExcelError.ExcelErrorValue
+        End If
+
+        If Not TypeOf inputArray1 Is Object(,) Then
+            Dim evaluate1 = Function(x) evaluate(inputArray1, x)
+            Return ArrayEvaluate(evaluate1, inputArray2)
+        ElseIf Not TypeOf inputArray2 Is Object(,) Then
+            Dim evaluate1 = Function(x) evaluate(x, inputArray2)
+            Return ArrayEvaluate(evaluate1, inputArray1)
+        End If
+
+        ' Now we know both input1 and input2 are arrays
+        ' We assume they are 1D, else error
+
+        Return ArrayEvaluate2(evaluate, inputArray1, inputArray2)
 
     End Function
 
@@ -108,6 +152,32 @@ Public Module Functions
             Return output
         Else
             Return evaluate(input)
+        End If
+    End Function
+
+    Private Function ArrayEvaluate2(evaluate As Func(Of Object, Object, Object), input1 As Object(,), input2 As Object(,)) As Object
+        If input1.GetLength(0) > 1 Then
+
+            ' Lots of rows in input1, we'll take its first column only, and take the columns from input2
+            Dim output(input1.GetLength(0) - 1, input2.GetLength(1) - 1) As Object
+
+            For i As Integer = 0 To input1.GetLength(0) - 1
+                For j As Integer = 0 To input2.GetLength(1) - 1
+                    output(i, j) = evaluate(input1(i, 0), input2(0, j))
+                Next
+            Next
+            Return output
+        Else
+
+            ' Single row in input1, we'll take its columns, and take the rows from input1
+            Dim output(input2.GetLength(0) - 1, input1.GetLength(1) - 1) As Object
+
+            For i As Integer = 0 To input2.GetLength(0) - 1
+                For j As Integer = 0 To input1.GetLength(1) - 1
+                    output(i, j) = evaluate(input1(0, j), input2(i, 0))
+                Next
+            Next
+            Return output
         End If
     End Function
 
