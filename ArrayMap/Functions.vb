@@ -3,182 +3,163 @@ Imports ExcelDna.Integration.XlCall
 Imports Microsoft.VisualBasic.FileIO
 
 Public Module Functions
-
-    <ExcelFunction(Name:="ARRAY.MAP", Description:="Evaluates the function for every value in the input array, returning an array that has the same size as the input.")>
-    Function ArrayMap(
-                     <ExcelArgument(Description:="The function to evaluate - either enter the name without any quotes or brackets (for .xll functions), or as a string (for VBA functions)")>
-                     [function] As Object,
-                     <ExcelArgument(Description:="The array of input values (row, column or rectangular range) ")>
-                     input As Object)
-
-        Dim evaluate As Func(Of Object, Object)
-
-        If TypeOf [function] Is Double Then
-            evaluate = Function(x) Excel(xlUDF, [function], x)
-        ElseIf TypeOf [function] Is String Then
-            ' First try to get the RegisterId, if it's an .xll UDF
-            Dim registerId As Object
-            registerId = Excel(xlfEvaluate, [function])
-            If TypeOf registerId Is Double Then
-                evaluate = Function(x) Excel(xlUDF, registerId, x)
-            Else
-                ' Just call as string, hoping it's a valid VBA function
-                evaluate = Function(x) Excel(xlUDF, [function], x)
-            End If
-        Else
-            Return ExcelError.ExcelErrorValue
-        End If
-
-        Return ArrayEvaluate(evaluate, input)
-    End Function
-
-    <ExcelFunction(Name:="ARRAY.MAP2", Description:="Evaluates the two-argument function for every value in the first and second inputs. " &
-                   "Takes a single value and any rectangle, or one row and one column, or one column and one row.")>
-    Function ArrayMap2(
-                     <ExcelArgument(Description:="The function to evaluate - either enter the name without any quotes or brackets (for .xll functions), or as a string (for VBA functions)")>
-                     [function] As Object,
-                     <ExcelArgument(Description:="The input value(s) for the first argument (row, column or rectangular range) ")>
-                     input1 As Object,
-                     <ExcelArgument(Description:="The input value(s) for the second argument (row, column or rectangular range) ")>
-                     input2 As Object)
-
-        Dim evaluate As Func(Of Object, Object, Object)
-
-        If TypeOf [function] Is Double Then
-            evaluate = Function(x, y) Excel(xlUDF, [function], x, y)
-        ElseIf TypeOf [function] Is String Then
-            ' First try to get the RegisterId, if it's an .xll UDF
-            Dim registerId As Object
-            registerId = Excel(xlfEvaluate, [function])
-            If TypeOf registerId Is Double Then
-                evaluate = Function(x, y) Excel(xlUDF, registerId, x, y)
-            Else
-                ' Just call as string, hoping it's a valid VBA function
-                evaluate = Function(x, y) Excel(xlUDF, [function], x, y)
-            End If
-        Else
-            Return ExcelError.ExcelErrorValue
-        End If
-
-        If Not TypeOf input1 Is Object(,) Then
-            Dim evaluate1 = Function(x) evaluate(input1, x)
-            Return ArrayEvaluate(evaluate1, input2)
-        ElseIf Not TypeOf input2 Is Object(,) Then
-            Dim evaluate1 = Function(x) evaluate(x, input2)
-            Return ArrayEvaluate(evaluate1, input1)
-        End If
-
-        ' Now we know both input1 and input2 are arrays
-        ' We assume they are 1D, else error
-
-        Return ArrayEvaluate2(evaluate, input1, input2)
-
-    End Function
-
-    <ExcelFunction(Name:="ARRAY.MAP3", Description:="Evaluates the three-argument function for arrays values. ")>
-    Function ArrayMap3(
-                     <ExcelArgument(Description:="The function to evaluate - either enter the name without any quotes or brackets (for .xll functions), or as a string (for VBA functions)")>
-                     [function] As Object,
+    <ExcelFunction(Name:="ARRAY.MAP", Description:="Evaluates the given function for arrays of input values. ")>
+    Function ArrayMapN(
+                     <ExcelArgument(Name:="function", Description:="The function to evaluate - either enter the name without any quotes or brackets (for .xll functions), or as a string (for VBA functions)")>
+                     funcNameOrId As Object,
                      <ExcelArgument(Description:="The input value(s) for the first argument (row, column or rectangular range) ")>
                      input1 As Object,
                      <ExcelArgument(Description:="The input value(s) for the second argument (row, column or rectangular range) ")>
                      input2 As Object,
                      <ExcelArgument(Description:="The input value(s) for the third argument (row, column or rectangular range) ")>
-                     input3 As Object)
+                     input3 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input4 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input5 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input6 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input7 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input8 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input9 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input10 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input11 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input12 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input13 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input14 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input15 As Object,
+                     <ExcelArgument(Description:="The input value(s) for the next argument (row, column or rectangular range) ")>
+                     input16 As Object)
 
-        Dim inputArray1 As Object
-        Dim inputArray2 As Object
 
-        Dim evaluate As Func(Of Object, Object, Object)
+        Dim inputs(16) As Object
 
-        Dim functionID As Object
+        inputs(0) = input1
+        inputs(1) = input2
+        inputs(2) = input3
+        inputs(3) = input4
+        inputs(4) = input5
+        inputs(5) = input6
+        inputs(6) = input7
+        inputs(7) = input8
+        inputs(8) = input9
+        inputs(9) = input10
+        inputs(10) = input11
+        inputs(11) = input12
+        inputs(12) = input13
+        inputs(13) = input14
+        inputs(14) = input15
+        inputs(15) = input16
 
-        If TypeOf [function] Is Double Then
-            functionID = [function]
-        ElseIf TypeOf [function] Is String Then
+        Dim evaluate As Func(Of Object(), Object)
+
+        Dim lastPresent As Integer ' 0-based index of the last input that is not Missing
+        For i = inputs.Length - 1 To 0 Step -1
+            If TypeOf inputs(i) IsNot ExcelMissing Then
+                lastPresent = i
+                Exit For
+            End If
+        Next
+
+        Dim udfIdentifier ' Either a registerId or a string name
+
+        If TypeOf funcNameOrId Is Double Then
+            udfIdentifier = funcNameOrId
+        ElseIf TypeOf funcNameOrId Is String Then
             ' First try to get the RegisterId, if it's an .xll UDF
             Dim registerId As Object
-            registerId = Excel(xlfEvaluate, [function])
+            registerId = Excel(xlfEvaluate, funcNameOrId)
             If TypeOf registerId Is Double Then
-                functionID = registerId
+                udfIdentifier = registerId
             Else
-                ' Just call as string, hoping it's a valid VBA function
-                functionID = [function]
+                udfIdentifier = funcNameOrId
             End If
         Else
+            ' Something we don't understand
             Return ExcelError.ExcelErrorValue
         End If
 
-        If Not TypeOf input1 Is Object(,) Then
-            evaluate = Function(x, y) Excel(xlUDF, functionID, input1, x, y)
-            inputArray1 = input2
-            inputArray2 = input3
-        ElseIf Not TypeOf input2 Is Object(,) Then
-            evaluate = Function(x, y) Excel(xlUDF, functionID, x, input2, y)
-            inputArray1 = input1
-            inputArray2 = input3
-        ElseIf Not TypeOf input3 Is Object(,) Then
-            evaluate = Function(x, y) Excel(xlUDF, functionID, x, y, input3)
-            inputArray1 = input1
-            inputArray2 = input2
+        evaluate = Function(args)
+                       Dim evalInput(args.Length) As Object
+                       evalInput(0) = udfIdentifier
+                       Array.Copy(args, 0, evalInput, 1, args.Length)
+                       Return Excel(xlUDF, evalInput)
+                   End Function
+
+        ' An input argument might appear in both of these collections, if it is a non-skinny rectangle
+        Dim rowInputs As New List(Of Integer)
+        Dim colInputs As New List(Of Integer)
+
+        For i As Integer = 0 To lastPresent
+            If TypeOf inputs(i) Is Object(,) Then
+
+                Dim rows = inputs(i).GetLength(0)
+                Dim cols = inputs(i).GetLength(1)
+
+                If rows > 1 Then
+                    If cols > 1 Then
+                        Return ExcelError.ExcelErrorValue
+                    End If
+
+                    colInputs.Add(i)
+                ElseIf cols > 1 Then
+                    rowInputs.Add(i)
+                End If
+            End If
+        Next
+
+        Dim numOutRows As Integer
+        Dim numOutCols As Integer
+
+        If colInputs.Count = 0 Then
+            numOutRows = 1
         Else
-            Return ExcelError.ExcelErrorValue
+            ' TODO: Check that all of the column inputs have the same length
+            Dim firstColInput As Object(,) = inputs(colInputs(0))
+            numOutRows = firstColInput.GetLength(0)
         End If
 
-        If Not TypeOf inputArray1 Is Object(,) Then
-            Dim evaluate1 = Function(x) evaluate(inputArray1, x)
-            Return ArrayEvaluate(evaluate1, inputArray2)
-        ElseIf Not TypeOf inputArray2 Is Object(,) Then
-            Dim evaluate1 = Function(x) evaluate(x, inputArray2)
-            Return ArrayEvaluate(evaluate1, inputArray1)
-        End If
-
-        ' Now we know both input1 and input2 are arrays
-        ' We assume they are 1D, else error
-
-        Return ArrayEvaluate2(evaluate, inputArray1, inputArray2)
-
-    End Function
-
-    Private Function ArrayEvaluate(evaluate As Func(Of Object, Object), input As Object) As Object
-        If TypeOf input Is Object(,) Then
-            Dim output(input.GetLength(0) - 1, input.GetLength(1) - 1) As Object
-
-            For i As Integer = 0 To input.GetLength(0) - 1
-                For j As Integer = 0 To input.GetLength(1) - 1
-                    output(i, j) = evaluate(input(i, j))
-                Next
-            Next
-            Return output
+        If rowInputs.Count = 0 Then
+            numOutCols = 1
         Else
-            Return evaluate(input)
+            ' TODO: Check
+            Dim firstRowInput As Object(,) = inputs(rowInputs(0))
+            numOutCols = firstRowInput.GetLength(1)
         End If
-    End Function
 
-    Private Function ArrayEvaluate2(evaluate As Func(Of Object, Object, Object), input1 As Object(,), input2 As Object(,)) As Object
-        If input1.GetLength(0) > 1 Then
+        Dim output(numOutRows - 1, numOutCols - 1) As Object
 
-            ' Lots of rows in input1, we'll take its first column only, and take the columns from input2
-            Dim output(input1.GetLength(0) - 1, input2.GetLength(1) - 1) As Object
+        For i = 0 To numOutRows - 1
+            For j As Integer = 0 To numOutCols - 1
+                Dim args(lastPresent) As Object
 
-            For i As Integer = 0 To input1.GetLength(0) - 1
-                For j As Integer = 0 To input2.GetLength(1) - 1
-                    output(i, j) = evaluate(input1(i, 0), input2(0, j))
+                For index = 0 To lastPresent  ' Do this stuff for each arg index
+                    If rowInputs.Contains(index) Then
+                        ' inputs(index) is a row
+                        args(index) = inputs(index)(0, j)
+                    ElseIf colInputs.Contains(index) Then
+                        ' inputs(index) is a column
+                        args(index) = inputs(index)(i, 0)
+                    Else
+                        args(index) = inputs(index)
+                    End If
                 Next
-            Next
-            Return output
-        Else
 
-            ' Single row in input1, we'll take its columns, and take the rows from input1
-            Dim output(input2.GetLength(0) - 1, input1.GetLength(1) - 1) As Object
-
-            For i As Integer = 0 To input2.GetLength(0) - 1
-                For j As Integer = 0 To input1.GetLength(1) - 1
-                    output(i, j) = evaluate(input1(0, j), input2(i, 0))
-                Next
+                output(i, j) = evaluate(args)
             Next
-            Return output
-        End If
+        Next
+
+        Return output
+
     End Function
 
     <ExcelFunction(IsHidden:=True)>
@@ -268,6 +249,10 @@ Public Module Functions
         Else
             Return array
         End If
+    End Function
+
+    Function ArrayConcat(input1 As Object, input2 As Object, input3 As Object, input4 As Object)
+        Return $"{input1} | {input2} | {input3} | {input4}"
     End Function
 
 End Module
