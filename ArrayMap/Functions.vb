@@ -41,7 +41,7 @@ Public Module Functions
                      input16 As Object)
 
 
-        Dim inputs(16) As Object
+        Dim inputs(15) As Object
 
         inputs(0) = input1
         inputs(1) = input2
