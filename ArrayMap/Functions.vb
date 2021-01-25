@@ -251,6 +251,7 @@ Public Module Functions
         End If
     End Function
 
+    <ExcelFunction(IsHidden:=True)>
     Function ArrayConcat(input1 As Object, input2 As Object, input3 As Object, input4 As Object)
         Return $"{input1} | {input2} | {input3} | {input4}"
     End Function
