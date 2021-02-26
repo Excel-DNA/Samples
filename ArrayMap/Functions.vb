@@ -150,7 +150,12 @@ Public Module Functions
                         ' inputs(index) is a column
                         args(index) = inputs(index)(i, 0)
                     Else
-                        args(index) = inputs(index)
+                        ' input might still be a 1x1 array, which we want to dereference
+                        If TypeOf inputs(index) Is Object(,) Then
+                            args(index) = inputs(index)(0, 0)
+                        Else
+                            args(index) = inputs(index)
+                        End If
                     End If
                 Next
 
@@ -162,6 +167,7 @@ Public Module Functions
 
     End Function
 
+#If DEBUG Then
     <ExcelFunction(IsHidden:=True)>
     Function Describe1(x)
         Return x.ToString()
@@ -171,6 +177,13 @@ Public Module Functions
     Function Describe2(x, y)
         Return x.ToString() & "|" & y.ToString()
     End Function
+
+    <ExcelFunction(IsHidden:=True)>
+    Function TestArray()
+        Return New Object(,) {{"x"}}
+    End Function
+#End If
+
 
     <ExcelFunction(Name:="ARRAY.FROMFILE", Description:="Reads the contents of a delimited file")>
     Function ArrayFromFile(<ExcelArgument("Full path to the file to read")> Path As String,
