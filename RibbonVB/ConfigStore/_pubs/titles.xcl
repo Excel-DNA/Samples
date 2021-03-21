@@ -1,0 +1,1 @@
+RC	=DBListFetch("Select TOP 10000 * FROM pubs..titles","",R[1]C,,,TRUE,TRUE,TRUE)
