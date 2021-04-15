@@ -53,6 +53,35 @@ namespace Uploader
                     Console.Beep(); // Like when it's some chart element
             });
         }
+
+        [ExcelCommand(MenuName = "Uploader", MenuText = "Upload Worksheet")]
+        public static void UploadWorksheet()
+        {
+            // From a menu we don't need the QueueAsMacro, but from a ribbon button we do
+            ExcelAsyncUtil.QueueAsMacro(() =>
+            {
+                var selection = XlCall.Excel(XlCall.xlfSelection) as ExcelReference;
+                // Expand selection reference to include the whole sheet
+                selection = new ExcelReference(0, ExcelDnaUtil.ExcelLimits.MaxRows, 
+                                               0, ExcelDnaUtil.ExcelLimits.MaxColumns, 
+                                               selection.SheetId);
+
+                if (selection != null)
+                    UploadManager.UploadSelection(selection);
+                else
+                    Console.Beep(); // Like when it's some chart element
+            });
+        }
+
+        [ExcelCommand(MenuName = "Uploader", MenuText = "Upload Workbook")]
+        public static void UploadWorkbook()
+        {
+            // From a menu we don't need the QueueAsMacro, but from a ribbon button we do
+            ExcelAsyncUtil.QueueAsMacro(() =>
+            {
+                UploadManager.UploadActiveWorkbook();
+            });
+        }
     }
 
     // 2. UploadStatus represents the state of an individual item
@@ -175,6 +204,35 @@ namespace Uploader
                        reference.RowFirst <= selection.RowLast &&
                        reference.ColumnFirst >= selection.ColumnFirst &&
                        reference.ColumnFirst <= selection.ColumnLast;
+            }
+        }
+
+        public static void UploadActiveWorkbook()
+        {
+            // Get the SheetIds of all sheets in the active workbbok
+            object[,] names = XlCall.Excel(XlCall.xlfGetWorkbook, 1) as object[,];
+            HashSet<IntPtr> sheetIds = new HashSet<IntPtr>();
+            for (int i = 0; i < names.GetLength(1); i++)
+            {
+                var sheetName = names[0, i];
+                var sheet = XlCall.Excel(XlCall.xlSheetId, sheetName) as ExcelReference;
+                sheetIds.Add(sheet.SheetId);
+            }
+            
+            // Get all the items currently "Waiting", update their status and send for processing
+            var waiting = UploadItems.Where(item => item.Status == UploadStatus.Waiting && IsInsideSelection(item.Caller)).ToList();
+            foreach (var item in waiting)
+                item.SetStatus(UploadStatus.InProgress);
+
+            PerformUploads(waiting);
+
+            // We just check the top left of the caller
+            bool IsInsideSelection(ExcelReference reference)
+            {
+                if (reference == null)
+                    return false;
+
+                return sheetIds.Contains(reference.SheetId);
             }
         }
 
