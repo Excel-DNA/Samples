@@ -91,28 +91,28 @@
 
 * Set up the tlbexp run in the post-build step
 
-```
-	REM Setting up environment vairables
-	call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvarsall.bat" x86
+```bat
+REM Setting up environment vairables
+call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvarsall.bat" x86
 
-	REM Temporarily copy ExcelDna.Integration.dll into output
-	REM Note: Might need to change depending on where packages directory is
-	copy "$(ProjectDir)\packages\ExcelDna.Integration.0.34.6\lib\ExcelDna.Integration.dll" "$(TargetDir)"
+REM Temporarily copy ExcelDna.Integration.dll into output
+REM Note: Might need to change depending on where packages directory is
+copy "$(ProjectDir)\packages\ExcelDna.Integration.1.5.1\lib\net452\ExcelDna.Integration.dll" "$(TargetDir)"
 
-	REM Create .tlb file
-	tlbexp.exe "$(ProjectDir)$(OutDir)$(TargetName)$(TargetExt)" /out:"$(ProjectDir)$(OutDir)$(TargetName).tlb"
+REM Create .tlb file
+tlbexp.exe "$(ProjectDir)$(OutDir)$(TargetName)$(TargetExt)" /out:"$(ProjectDir)$(OutDir)$(TargetName).tlb"
 
-	REM Delete extra copy of ExcelDna.Integration.dll from output
-	del "$(TargetDir)ExcelDna.Integration.dll"
+REM Delete extra copy of ExcelDna.Integration.dll from output
+del "$(TargetDir)ExcelDna.Integration.dll"
 
-	REM Re-run the packing to include the .tlb inside the packed files for distribution
-	REM Note: Might need to change depending on where packages directory is
-	"$(ProjectDir)\packages\ExcelDna.AddIn.0.34.6\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn-packed.xll"
-	"$(ProjectDir)\packages\ExcelDna.AddIn.0.34.6\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64-packed.xll"
+REM Re-run the packing to include the .tlb inside the packed files for distribution
+REM Note: Might need to change depending on where packages directory is
+"$(ProjectDir)\packages\ExcelDna.AddIn.1.5.1\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn-packed.xll"
+"$(ProjectDir)\packages\ExcelDna.AddIn.1.5.1\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64-packed.xll"
 
-	REM Register COM servers in add-in on this machine for testing
-	REM Note: Change this to -AddIn64.xll if the 64-bit version of Excel is installed
-	regsvr32.exe /s "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.xll"
+REM Register COM servers in add-in on this machine for testing
+REM Note: Change this to -AddIn64.xll if the 64-bit version of Excel is installed
+regsvr32.exe /s "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.xll"
 ```
 
 * F5 to build and run Excel
