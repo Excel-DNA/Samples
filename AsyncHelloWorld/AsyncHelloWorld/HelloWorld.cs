@@ -8,10 +8,10 @@ namespace AsyncHelloWorld
         [ExcelDna.Integration.ExcelFunction(Description = "Async Hello World")]
         public static object SayHelloAsync(string name)
         {
-            return ExcelAsyncUtil.Run("RunSomethingDelay", new [] { name }, () => RunSomethingDelay(name));
+            return ExcelAsyncUtil.Run(nameof(SayHelloAsync), new object[] { name }, () => SayHelloWithDelay(name));
         }
 
-        public static string RunSomethingDelay(string name)
+        private static string SayHelloWithDelay(string name)
         {
             Thread.Sleep(2000);
             return $"Hello {name}";
