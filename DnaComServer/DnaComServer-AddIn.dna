@@ -1,3 +1,0 @@
-<DnaLibrary Name="DnaComServer Add-In" RuntimeVersion="v4.0">
-  <ExternalLibrary Path="DnaComServer.dll" ExplicitExports="false" ComServer="true" LoadFromBytes="true" Pack="true" />
-</DnaLibrary>

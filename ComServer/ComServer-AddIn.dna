@@ -1,3 +1,0 @@
-<DnaLibrary Name="ComServer Add-In" RuntimeVersion="v4.0">
-  <ExternalLibrary Path="ComServer.dll" ExplicitExports="false" LoadFromBytes="true" ComServer="true" Pack="true" />
-</DnaLibrary>
