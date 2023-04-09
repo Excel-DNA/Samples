@@ -5,4 +5,3 @@
 
 Additional project properties
 * Add <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
-* Add <useWindowsForms>true</UseWindowsForms>

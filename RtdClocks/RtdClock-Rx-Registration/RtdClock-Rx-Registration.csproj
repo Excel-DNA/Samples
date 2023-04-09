@@ -3,10 +3,6 @@
 	<PropertyGroup>
 		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
 
-    <!-- This helps the System.Reactive package to not bring in the System.Configuration.ConfigurationManager package, which causes a big mess
-         It implies the Desktop SDK is loaded and avaialble (which is always the case with an Excel-DNA add-in but the build system does not know that) -->
-		<UseWindowsForms>true</UseWindowsForms>
-
     <!-- This property prevents the auto-registration of Excel functions (by default all publis static functions)
          We will use the Registration helper and a call in the AutoOpen method to register functions explicitly  -->
     <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
