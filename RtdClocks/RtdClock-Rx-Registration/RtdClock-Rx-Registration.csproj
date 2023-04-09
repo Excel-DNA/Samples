@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
 
-    <!-- This property prevents the auto-registration of Excel functions (by default all publis static functions)
+    <!-- This property prevents the auto-registration of Excel functions (by default all public static functions)
          We will use the Registration helper and a call in the AutoOpen method to register functions explicitly  -->
     <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
 	</PropertyGroup>
