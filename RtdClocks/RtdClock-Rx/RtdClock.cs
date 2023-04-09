@@ -13,7 +13,7 @@ namespace RtdClock_Rx
         {
             string functionName = "dnaRtdClock_Rx";
             object paramInfo = null; // could be one parameter passed in directly, or an object array of all the parameters: new object[] {param1, param2}
-            return ObservableRtdUtil.Observe(functionName, paramInfo, () => GetObservableClock() );
+            return ObservableRtdUtil.Observe(functionName, paramInfo, () => GetObservableClock());
         }
 
         static IObservable<string> GetObservableClock()

@@ -1,17 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	</PropertyGroup>
-	<ItemGroup>
-		<Compile Remove="Properties\AssemblyInfo.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Remove="packages.config" />
-		<None Remove="Properties\ExcelDna.Build.props" />
-		<None Remove="RtdClock-IExcelObservable-AddIn.dna" />
-	</ItemGroup>
+    <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+  </PropertyGroup>
+  
 	<ItemGroup>
 		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
 	</ItemGroup>

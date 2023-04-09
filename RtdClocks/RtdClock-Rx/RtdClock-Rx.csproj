@@ -1,26 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+
+    <!-- This helps the System.Reactive package to not bring in the System.Configuration.ConfigurationManager package, which causes a big mess
+         It implies the Desktop SDK (workload) is loaded and avaialble (which is always the case with an Excel-DNA add-in but the build system does not know that) -->
+    <UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 
+  <!-- Add a PropertyGroup that will only be active for the net472 target framework 
+       Set up the additional assemblies to pack
+       We want to include all libraries in the output directory
+       (For .NET 6 we use the .deps.json file to find the assemblies to pack, so this property is not needed)
+  -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
+    <ExcelAddInInclude>System.Reactive.dll;System.Runtime.CompilerServices.Unsafe.dll;System.Threading.Tasks.Extensions.dll</ExcelAddInInclude>
+  </PropertyGroup>
+  
 	<ItemGroup>
-	  <Compile Remove="Properties\AssemblyInfo.cs" />
+		<PackageReference Include="ExcelDna.Addin" Version="1.7.0-rc3" />
+		<PackageReference Include="System.Reactive" Version="5.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="packages.config" />
-	  <None Remove="Properties\ExcelDna.Build.props" />
-	  <None Remove="RtdClock-Rx-AddIn.dna" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
-		<PackageReference Include="System.Reactive.Core" Version="*-*" />
-		<PackageReference Include="System.Reactive.Interfaces" Version="*-*" />
-		<PackageReference Include="System.Reactive.Linq" Version="*-*" />
-		<PackageReference Include="System.Reactive.PlatformServices" Version="*-*" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="*-*" />
-	</ItemGroup>
 </Project>

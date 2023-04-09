@@ -1,9 +1,8 @@
 ﻿This project has the following NuGet packages installed:
-* RxMain
 * ExcelDna.AddIn
 * ExcelDna.Registration
+* System.Reactive
 
-Updates made to the .dna file:
-* Add ExplicitRegistration="true"
-* Add the ExcelDna.Registration reference for packing
-* Add the Rx references for packing
+Additional project properties
+* Add <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
+* Add <useWindowsForms>true</UseWindowsForms>

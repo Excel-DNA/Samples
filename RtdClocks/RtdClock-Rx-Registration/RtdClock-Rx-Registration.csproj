@@ -2,26 +2,29 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+    <!-- This helps the System.Reactive package to not bring in the System.Configuration.ConfigurationManager package, which causes a big mess
+         It implies the Desktop SDK is loaded and avaialble (which is always the case with an Excel-DNA add-in but the build system does not know that) -->
+		<UseWindowsForms>true</UseWindowsForms>
+
+    <!-- This property prevents the auto-registration of Excel functions (by default all publis static functions)
+         We will use the Registration helper and a call in the AutoOpen method to register functions explicitly  -->
+    <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Properties\AssemblyInfo.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="packages.config" />
-	  <None Remove="Properties\ExcelDna.Build.props" />
-	  <None Remove="RtdClock-Rx-Registration-AddIn.dna" />
-	</ItemGroup>
-
-	<ItemGroup>
+  <!-- Add a PropertyGroup that will only be active for the net472 target framework 
+       Set up the additional assemblies to pack
+       We want to include all libraries in the output directory
+       (For .NET 6 we use the .deps.json file to find the assemblies to pack, so this property is not needed)
+  -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
+    <ExcelAddInInclude>ExcelDna.Registration.dll;System.Reactive.dll;System.Runtime.CompilerServices.Unsafe.dll;System.Threading.Tasks.Extensions.dll</ExcelAddInInclude>
+  </PropertyGroup>
+  
+  <ItemGroup>
 		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
 		<PackageReference Include="ExcelDna.Registration" Version="*-*" />
-		<PackageReference Include="System.Reactive.Core" Version="*-*" />
-		<PackageReference Include="System.Reactive.Interfaces" Version="*-*" />
-		<PackageReference Include="System.Reactive.Linq" Version="*-*" />
-		<PackageReference Include="System.Reactive.PlatformServices" Version="*-*" />
+		<PackageReference Include="System.Reactive" Version="*-*" />
 	</ItemGroup>
 	
 </Project>
