@@ -14,7 +14,7 @@
   </PropertyGroup>
   
 	<ItemGroup>
-		<PackageReference Include="ExcelDna.Addin" Version="1.7.0-rc3" />
+		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
 		<PackageReference Include="System.Reactive" Version="*-*" />
 	</ItemGroup>
 
