@@ -16,5 +16,5 @@ The interesting code is in MyRibbon.fs
 
 ## Using the COM object model
 For macros that manipulate Excel, using the COM object model is best:
-* Add references to the Primary Interop Assemblies (Install-Package Excel-DNA.Interop) and 
+* Add references to the Primary Interop Assemblies (Install-Package ExcelDna.Interop) and 
 * get hold of the root Application object with a call to ExcelDnaUtil.Application

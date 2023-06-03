@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="MyFunctions.fs" />
+		<Compile Include="MyRibbon.fs" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ExcelDna.AddIn" Version="1.6.0" />
+		<PackageReference Include="ExcelDna.Integration" Version="1.6.0" />
+		<PackageReference Include="ExcelDna.Interop" Version="15.0.1" />
+	</ItemGroup>
+</Project>
