@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Werte der Assemblyattribute überprüfen
 
-<Assembly: AssemblyTitle("ClassLibrary1")>
+'<Assembly: AssemblyTitle("ClassLibrary1")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("ClassLibrary1")>
+'<Assembly: AssemblyCompany("")>
+'<Assembly: AssemblyProduct("ClassLibrary1")>
 <Assembly: AssemblyCopyright("Copyright ©  2021")>
 <Assembly: AssemblyTrademark("")>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' indem Sie "*" wie unten gezeigt eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+'<Assembly: AssemblyVersion("1.0.0.0")>
+'<Assembly: AssemblyFileVersion("1.0.0.0")>
