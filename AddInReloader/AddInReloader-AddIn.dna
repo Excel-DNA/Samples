@@ -1,3 +1,0 @@
-<DnaLibrary Name="AddInReloader Add-In" RuntimeVersion="v4.0">
-  <ExternalLibrary Path="AddInReloader.dll" LoadFromBytes="true" Pack="true" />
-</DnaLibrary>
