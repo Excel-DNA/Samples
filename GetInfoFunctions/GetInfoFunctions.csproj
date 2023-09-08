@@ -1,13 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<LangVersion>10.0</LangVersion>
   </PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="ExcelDna.AddIn" Version="*-*" />
+	</ItemGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+		<Reference Include="System.Net.Http" />
+	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ExcelDna.AddIn" Version="1.6.0-preview3" />
+	  <Folder Include="Properties\" />
 	</ItemGroup>
 
 </Project>
