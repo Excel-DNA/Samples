@@ -1,6 +1,7 @@
 ﻿using System;
 using ExcelDna.Integration;
 using Microsoft.Office.Interop.Excel;
+using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Ribbon
 {
