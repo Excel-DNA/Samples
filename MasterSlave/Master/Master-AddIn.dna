@@ -1,3 +1,0 @@
-<DnaLibrary Name="Master Add-In" RuntimeVersion="v4.0">
-  <ExternalLibrary Path="Master.dll" LoadFromBytes="true" Pack="true" />
-</DnaLibrary>
