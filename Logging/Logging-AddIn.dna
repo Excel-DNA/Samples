@@ -1,5 +1,0 @@
-<DnaLibrary Name="Logging Add-In" RuntimeVersion="v4.0">
-  <ExternalLibrary Path="Logging.dll" LoadFromBytes="true" Pack="true" />
-  <Reference Path="NLog.dll" Pack="true" />
-  <Reference Path="log4net.dll" Pack="true" />
-</DnaLibrary>
