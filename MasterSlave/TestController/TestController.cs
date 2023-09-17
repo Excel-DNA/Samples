@@ -43,7 +43,7 @@ namespace TestController
             Application.Visible = true;
             
 
-            Application.RegisterXLL(basePath + @"Master\bin\Debug\Master-AddIn.xll");
+            Application.RegisterXLL(basePath + @"Master\bin\Debug\Master-AddIn64.xll");
             foreach (AddIn addIn in Application.AddIns2)
             {
                 if (addIn.IsOpen)
