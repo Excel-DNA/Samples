@@ -3,6 +3,9 @@ Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Interop.Excel ' for event procedures...
 Imports Microsoft.Vbe.Interop
 Imports System.Runtime.InteropServices
+Imports System.Windows
+
+
 
 
 ''' <summary>AddIn Connection class, also handling Events from Excel (Open, Close, Activate)</summary>
