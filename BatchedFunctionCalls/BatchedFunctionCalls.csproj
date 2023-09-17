@@ -1,15 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
     <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
 	  <LangVersion>10.0</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- 
+				 Normally, Excel-DNA will register all 'public static' methods. 
+         However, in this project we are doing the registration explicitly 
+         (in the `AutoOpen`, using the ExcelDna.Registration helper library).
+         Automatic registration for this project will show an error, 
+         because the `BatchedCall` method has an 'incompatible' signature (returning Task<string>).
+         This property configures explicit registration mode.
+    -->
+    <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExcelDna.Registration" Version="1.6.0" />
+    <PackageReference Include="ExcelDna.AddIn" Version="*-*" />
+    <PackageReference Include="ExcelDna.Registration" Version="*-*" />
     <PackageReference Include="Open.ChannelExtensions" Version="6.2.2" />
   </ItemGroup>
 
