@@ -2,6 +2,17 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+    
+    <!-- 
+				 Normally, Excel-DNA will register all 'public static' methods. 
+         However, in this project we are doing the registration explicitly 
+         (in the AutoOpen, using the ExcelDna.Registration helper library).
+         Automatic registration for this project will show an error, 
+         because the httpGetString method has an 'incompatible' signature (returning Task<string>).
+         This property configures explicit registration mode.
+    -->
+    <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
+    
 	</PropertyGroup>
 
 	<ItemGroup>
