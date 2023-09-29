@@ -2,6 +2,13 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+	</ItemGroup>
+	
 
 </Project>
