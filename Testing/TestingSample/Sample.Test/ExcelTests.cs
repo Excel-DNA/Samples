@@ -13,6 +13,7 @@ namespace Sample.Test
     // Setting an AddIn options here will request the test runner to load this add-in into Excel before the tests start.
     // The name here excludes the ".xll" or "64.xll" suffix. The test runner will choose according to the Excel bitness where it runs.
     [ExcelTestSettings(AddIn = @"..\..\..\Sample\bin\Debug\Sample-AddIn")]
+
     public class ExcelTests : IDisposable
     {
         // This workbook will be available to all tests in the class
