@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("UsingDAO")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("UsingDAO")> 
+'<Assembly: AssemblyTitle("UsingDAO")> 
+<Assembly: AssemblyDescription("")>
+'<Assembly: AssemblyCompany("")> 
+'<Assembly: AssemblyProduct("UsingDAO")> 
 <Assembly: AssemblyCopyright("Copyright ©  2015")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("9837e37e-15fa-420d-a4e5-b9e371669055")> 
+<Assembly: Guid("9837e37e-15fa-420d-a4e5-b9e371669055")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+'<Assembly: AssemblyVersion("1.0.0.0")>
+'<Assembly: AssemblyFileVersion("1.0.0.0")> 
