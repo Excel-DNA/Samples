@@ -1,9 +1,0 @@
-<DnaLibrary Name="UsingRDotNet Add-In" RuntimeVersion="v4.0">
-  
-  <ExternalLibrary Path="UsingRDotNet.dll" LoadFromBytes="true" Pack="true" />
-
-  <Reference Path="DynamicInterop.dll" Pack="true" />
-  <Reference Path="RDotNet.dll" Pack="true" />
-  <Reference Path="RDotNet.NativeLibrary.dll" Pack="true" />
-  
-</DnaLibrary>
