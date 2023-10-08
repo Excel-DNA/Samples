@@ -6,8 +6,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
-		<PackageReference Include="R.NET.Community" Version="*-*" />
-		<PackageReference Include="DynamicInterop" Version="*-*" />
+		<PackageReference Include="R.NET" Version="*-*" />
 	</ItemGroup>
 
 </Project>

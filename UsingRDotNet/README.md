@@ -4,14 +4,15 @@ This is just a basic sample to get started using R with Excel.
 
 I followed these steps to create the add-in:
 
-1. Ensure that R is installed. In my Windows "Add or Remove Programs" list I see "R for Windows 3.02".
+1. Ensure that R is installed from https://cran.r-project.org/bin/windows/base/
+   The bitness of the R installation must match that of Excel. Note that v4.1.3 is the last version to support 32bit. 
 
 2. Create a new "Class Library" project in Visual Studio.
 
 3. In the NuGet package Manager Console, execute the commands:
 
-        PM> Install-Package Excel-DNA
-        PM> Install-Package R.NET.Community
+        PM> Install-Package ExcelDna.Addin
+        PM> Install-Package R.NET
 
 4. Add the sample code from AddIn.cs.
 
@@ -22,8 +23,6 @@ I followed these steps to create the add-in:
 
 ## Other links
 
-* The R project, including links to the R installation is at, http://www.r-project.org/.
+* The R project, including links to the R installation is at, http://www.r-project.org/ 
 
-* The R.NET project is at http://rdotnet.codeplex.com/.
-
-* A nice and more useful introduction to using R from Excel, using F#, was written by Natallie Baikevich and can be found at http://type-nat.ch/excel-dna-three-stories//
+* The R.NET project is at https://github.com/rdotnet/rdotnet
