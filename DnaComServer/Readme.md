@@ -1,64 +1,103 @@
-* Create new C# project of type "Class Library (.NET Framework)" called DnaComServer
+These are work in progress instructions for supporting COM server with the current ExcelDNA version. Note that 32bit Excel is not supported for early binding yet.
+
+* Create new C# project of type "Class Library" called DnaComServer
 
 * Package Manager Console:
 	`PM> Install-Package ExcelDna.AddIn`
+	`PM> Install-Package dSPACE.Runtime.InteropServices.BuildTasks`
 
 * Rename Class1.cs to AddIn.cs with this code:
 
 ```c#
 	using System.Runtime.InteropServices;
-	using ExcelDna.ComInterop;
-	using ExcelDna.Integration;
+using ExcelDna.ComInterop;
+using ExcelDna.Integration;
 
-	namespace DnaComServer
-	{
-		[ComVisible(true)]
-		[ClassInterface(ClassInterfaceType.AutoDual)]
-		public class ComLibrary
-		{
-			public string ComLibraryHello()
-			{
-				return "Hello from DnaComServer.ComLibrary";
-			}
+namespace DnaComServer
+{
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public interface IComLibrary
+    {
+        string ComLibraryHello();
+        double Add(double x, double y);
+    }
 
-			public double Add(double x, double y)
-			{
-				return x + y;
-			}
-		}
-    
-		[ComVisible(false)]
-		public class ExcelAddin : IExcelAddIn
-		{
-			public void AutoOpen()
-			{
-				ComServer.DllRegisterServer();
-			}
-			public void AutoClose()
-			{
-				ComServer.DllUnregisterServer();
-			}
-		}
+    [ComDefaultInterface(typeof(IComLibrary))]
+    public class ComLibrary
+    {
+        public string ComLibraryHello()
+        {
+            return "Hello from DnaComServer.ComLibrary";
+        }
 
-		public static class Functions
-		{
-			[ExcelFunction]
-			public static object DnaComServerHello()
-			{
-				return "Hello from DnaComServer!";
-			}
-		}
-	}
+        public double Add(double x, double y)
+        {
+            return x + y;
+        }
+    }
+
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public interface IComLibrary2
+    {
+        string ComLibrary2Hello();
+        double Add2(double x, double y);
+    }
+
+    [ComDefaultInterface(typeof(IComLibrary2))]
+    public class ComLibrary2
+    {
+        public string ComLibrary2Hello()
+        {
+            return "Hello from DnaComServer.ComLibrary2";
+        }
+
+        public double Add2(double x, double y)
+        {
+            return x + y;
+        }
+    }
+
+    [ComVisible(false)]
+    public class ExcelAddin : IExcelAddIn
+    {
+        public void AutoOpen()
+        {
+            ComServer.DllRegisterServer();
+        }
+        public void AutoClose()
+        {
+            ComServer.DllUnregisterServer();
+        }
+    }
+
+    public static class Functions
+    {
+        [ExcelFunction]
+        public static object DnaComServerHello()
+        {
+            return "Hello from DnaComServer!";
+        }
+    }
+}
 ```
 
-* DnaComServer-AddIn.dna file:
+* Edit the DnaComServer.csproj file and add the following:
 
 ```xml
-	<DnaLibrary Name="DnaComServer Add-In" RuntimeVersion="v4.0">
-	  <ExternalLibrary Path="DnaComServer.dll" ExplicitExports="false" ComServer="true" LoadFromBytes="true" Pack="true" />
-	</DnaLibrary>
+	<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+		<ExcelAddInComServer>true</ExcelAddInComServer>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
+		<PackageReference Include="dSPACE.Runtime.InteropServices.BuildTasks" Version="1.2.0"/>	
+	</ItemGroup>
+
+</Project>
 ```
-* Fix Project -> Debug settings to remove %1 in "Start external program" path if present
 
 * Press F5 to build and load in Excel
 
@@ -89,35 +128,7 @@
 * Check Immediate window for output:
 	Hello from DnaComServer.ComLibrary         3 
 
-* Set up the tlbexp run in the post-build step
-
-```bat
-REM Setting up environment vairables
-call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvarsall.bat" x86
-
-REM Temporarily copy ExcelDna.Integration.dll into output
-REM Note: Might need to change depending on where packages directory is
-copy "$(ProjectDir)\packages\ExcelDna.Integration.1.5.1\lib\net452\ExcelDna.Integration.dll" "$(TargetDir)"
-
-REM Create .tlb file
-tlbexp.exe "$(ProjectDir)$(OutDir)$(TargetName)$(TargetExt)" /out:"$(ProjectDir)$(OutDir)$(TargetName).tlb"
-
-REM Delete extra copy of ExcelDna.Integration.dll from output
-del "$(TargetDir)ExcelDna.Integration.dll"
-
-REM Re-run the packing to include the .tlb inside the packed files for distribution
-REM Note: Might need to change depending on where packages directory is
-"$(ProjectDir)\packages\ExcelDna.AddIn.1.5.1\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn-packed.xll"
-"$(ProjectDir)\packages\ExcelDna.AddIn.1.5.1\tools\ExcelDnaPack.exe" "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64.dna" /Y  /O "$(ProjectDir)$(OutDir)$(TargetName)-AddIn64-packed.xll"
-
-REM Register COM servers in add-in on this machine for testing
-REM Note: Change this to -AddIn64.xll if the 64-bit version of Excel is installed
-regsvr32.exe /s "$(ProjectDir)$(OutDir)$(TargetName)-AddIn.xll"
-```
-
 * F5 to build and run Excel
-
-* (If this does not work due to tlbexp.exe not found, see [this discussion](https://groups.google.com/forum/#!topic/exceldna/XH3UbPwCnak).)
 
 * Open VBA IDE (Alt+F11)
 

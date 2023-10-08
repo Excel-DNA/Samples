@@ -4,8 +4,14 @@ using ExcelDna.Integration;
 
 namespace DnaComServer
 {
-    [ComVisible(true)]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public interface IComLibrary
+    {
+        string ComLibraryHello();
+        double Add(double x, double y);
+    }
+
+    [ComDefaultInterface(typeof(IComLibrary))]
     public class ComLibrary
     {
         public string ComLibraryHello()
@@ -19,8 +25,14 @@ namespace DnaComServer
         }
     }
 
-    [ComVisible(true)]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public interface IComLibrary2
+    {
+        string ComLibrary2Hello();
+        double Add2(double x, double y);
+    }
+
+    [ComDefaultInterface(typeof(IComLibrary2))]
     public class ComLibrary2
     {
         public string ComLibrary2Hello()
