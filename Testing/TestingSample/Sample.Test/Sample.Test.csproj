@@ -2,12 +2,16 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
 		<PackageReference Include="ExcelDna.Testing" Version="*-*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="TestBook.xlsx">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

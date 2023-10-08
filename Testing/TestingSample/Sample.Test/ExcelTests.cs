@@ -3,16 +3,17 @@ using Xunit;
 using ExcelDna.Testing;
 using Microsoft.Office.Interop.Excel;
 
-// This attribute MUST be present somewhere in the test project to connect xUnit to the ExcelDna.Testing framework.
-// It could also be placed in the Properties\AssemblyInfo.cs file.
-[assembly:Xunit.TestFramework("Xunit.ExcelTestFramework", "ExcelDna.Testing")]
-
 namespace Sample.Test
 {
+
     // The path give here is relative to the output directory of the test project.
     // Setting an AddIn options here will request the test runner to load this add-in into Excel before the tests start.
     // The name here excludes the ".xll" or "64.xll" suffix. The test runner will choose according to the Excel bitness where it runs.
-    [ExcelTestSettings(AddIn = @"..\..\..\Sample\bin\Debug\Sample-AddIn")]
+#if NETFRAMEWORK
+    [ExcelTestSettings(AddIn = @"..\..\..\..\Sample\bin\Debug\net472\Sample-AddIn")]
+#else
+    [ExcelTestSettings(AddIn = @"..\..\..\..\Sample\bin\Debug\net6.0-windows\Sample-AddIn")]
+#endif
 
     public class ExcelTests : IDisposable
     {
