@@ -26,7 +26,9 @@ namespace GenericHost
             if (RibbonRegistration != null)
             {
                 foreach (var addIn in RibbonRegistration.GetRibbonAddIns())
+                {
                     ExcelComAddInHelper.LoadComAddIn(addIn);
+                }
             }
         }
     }

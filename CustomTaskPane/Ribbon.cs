@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 using ExcelDna.Integration.CustomUI;
 
 namespace CustomTaskPane
@@ -8,6 +9,7 @@ namespace CustomTaskPane
     {
         public override string GetCustomUI(string RibbonID)
         {
+            Debug.Print("CustomTaskPane.GetCustomUI");
             return
 @"<customUI xmlns='http://schemas.microsoft.com/office/2006/01/customui' loadImage='LoadImage'>
     <ribbon>

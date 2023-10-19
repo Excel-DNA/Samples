@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
+		<PackageReference Include="ExcelDna.Addin" Version="1.7.0-rc9" />
 	</ItemGroup>
 
 	<ItemGroup>

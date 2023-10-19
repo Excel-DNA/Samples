@@ -2,18 +2,27 @@
 using ExcelDna.ComInterop;
 using ExcelDna.Integration;
 
+[assembly:ComVisible(false)]
+    
 namespace DnaComServer
 {
+
+    [ComVisible(true)]
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
-    public interface IComLibrary
+    public interface IComLibraryC
     {
         string ComLibraryHello();
         double Add(double x, double y);
     }
 
-    [ComDefaultInterface(typeof(IComLibrary))]
-    public class ComLibrary
+    [ComVisible(true)]
+    [ComDefaultInterface(typeof(IComLibraryC))]
+    public class ComLibraryC
     {
+        public ComLibraryC()
+        {
+        }
+        
         public string ComLibraryHello()
         {
             return "Hello from DnaComServer.ComLibrary";
@@ -25,15 +34,17 @@ namespace DnaComServer
         }
     }
 
+    [ComVisible(true)]
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
-    public interface IComLibrary2
+    public interface IComLibrary2C
     {
         string ComLibrary2Hello();
         double Add2(double x, double y);
     }
 
-    [ComDefaultInterface(typeof(IComLibrary2))]
-    public class ComLibrary2
+    [ComVisible(true)]
+    [ComDefaultInterface(typeof(IComLibrary2C))]
+    public class ComLibrary2C
     {
         public string ComLibrary2Hello()
         {
@@ -46,7 +57,6 @@ namespace DnaComServer
         }
     }
 
-    [ComVisible(false)]
     public class ExcelAddin : IExcelAddIn
     {
         public void AutoOpen()

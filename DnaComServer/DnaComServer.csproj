@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+		<TargetFramework>net6.0-windows</TargetFramework>
 		<ExcelAddInComServer>true</ExcelAddInComServer>
+    <Version>1.0.0.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
+		<PackageReference Include="ExcelDna.Addin" Version="1.7.0-rc7" />
 		<PackageReference Include="dSPACE.Runtime.InteropServices.BuildTasks" Version="1.2.0"/>	
 	</ItemGroup>
 

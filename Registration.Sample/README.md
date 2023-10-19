@@ -1,7 +1,7 @@
-Excel-DNA Custom Registration Example
-=====================================
+Excel-DNA Registration Example
+==============================
 
-This C# add-in shows how the ExcelDna.CustomRegistration helper library may be used.
+This C# add-in shows how the ExcelDna.Registration helper library may be used.
 
 AddIn.cs
 ------

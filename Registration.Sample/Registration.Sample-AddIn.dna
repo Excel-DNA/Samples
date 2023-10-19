@@ -1,4 +1,0 @@
-<DnaLibrary Name="Registration.Sample Add-In" RuntimeVersion="v4.0" >
-  <ExternalLibrary Path="Registration.Sample.dll" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" />
-  <Reference Path="ExcelDna.Registration.dll" Pack="true" />
-</DnaLibrary>

@@ -142,7 +142,7 @@ namespace DnaComServer
 
 ```vb
 	Sub TestEarlyBound()
-		Dim dnaComServer As DnaComServer.ComLibrary
+		Dim dnaComServer As DnaComServer.IComLibrary
 		Dim hello As String
 		Dim result As Double
     

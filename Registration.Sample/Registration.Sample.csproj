@@ -2,9 +2,12 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net452;net6.0-windows</TargetFrameworks>
+    <UseWindowsForms>true</UseWindowsForms>
 
-		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>..\..\assets\exceldna.snk</AssemblyOriginatorKeyFile>
+    <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
+    
+		<!--<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\..\assets\exceldna.snk</AssemblyOriginatorKeyFile>-->
 	</PropertyGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
@@ -17,12 +20,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ExcelDna.Integration" />
-		<PackageReference Include="ExcelDna.AddIn" />
+		<PackageReference Include="ExcelDna.Integration" Version="*-*" />
+    <PackageReference Include="ExcelDna.AddIn" Version="*-*" />
+    <PackageReference Include="ExcelDna.Registration" Version="*-*" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\ExcelDna.Registration\ExcelDna.Registration.csproj" />
+		<!--<ProjectReference Include="..\..\ExcelDna.Registration\ExcelDna.Registration.csproj" />-->
 	</ItemGroup>
 
 </Project>

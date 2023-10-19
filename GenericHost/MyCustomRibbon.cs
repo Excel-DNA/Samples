@@ -24,6 +24,8 @@ namespace GenericHost
         string GetCustomUI(string RibbonID);
     }
 
+    [ProgId("GenericHost.MyCustomRibbon")]
+    [Guid("E595901B-903E-4FE7-8D06-6E7F3D5A2C4F")]
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
     public class MyCustomRibbon : ExcelComAddIn, IRibbonExtensibility
