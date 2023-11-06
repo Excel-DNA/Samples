@@ -10,13 +10,5 @@
 	<ItemGroup>
 		<PackageReference Include="ExcelDna.AddIn" Version="*-*" />
 	</ItemGroup>
-	
-	<ItemGroup Condition="'$(TargetFramework)' == 'net472'">
-		<Reference Include="System.Net.Http" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Properties\" />
-	</ItemGroup>
 
 </Project>
