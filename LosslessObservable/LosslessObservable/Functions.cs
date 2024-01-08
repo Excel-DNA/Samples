@@ -16,7 +16,12 @@ namespace LosslessObservable
 
         public static object LosslessClock()
         {
-            return ExcelAsyncUtil.Observe("LosslessClock", null, ExcelObservableOptions.Lossless, () => new LosslessClock());
+            return ExcelAsyncUtil.Observe("LosslessClock", null, ExcelObservableOptions.Lossless, () => new ObservableClock());
+        }
+
+        public static object Clock()
+        {
+            return ExcelAsyncUtil.Observe("Clock", null, ExcelObservableOptions.None, () => new ObservableClock());
         }
 
         public static int SetThrottleInterval(int interval)

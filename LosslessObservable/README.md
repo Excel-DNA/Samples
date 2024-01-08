@@ -86,6 +86,7 @@ HKEY_CURRENT_USER\Software\Microsoft\Office\[YOUR_OFFICE_VERSION]]\Excel\Options
 The sample project also provides a sequence with numbers generated every 500 milliseconds that can be invoked with `=ObservableTimedSequence()`:
 
 ```c#
+
 public static object ObservableTimedSequence()
 {
     return ExcelAsyncUtil.Observe("ObservableTimedSequence", null, ExcelObservableOptions.Lossless, () => new ObservableTimedSequence());
@@ -141,5 +142,32 @@ internal class ObservableTimedSequence : IExcelObservable
 
 ```
 
-The sample project also provides a lossless clock updated every second that can be invoked with `=LosslessClock()`. Note, that if RTD throttle interval is greater than 1 second, then displayed time will lag from real time. Thus, it is a not a good way to display correct time, but illustrates lossless behavior. 
+The sample project also provides an observable clock updated every second. It can be invoked with or without the `Lossless` option:
+
+```c#
+
+public static object LosslessClock()
+{
+    return ExcelAsyncUtil.Observe("LosslessClock", null, ExcelObservableOptions.Lossless, () => new ObservableClock());
+}
+
+public static object Clock()
+{
+    return ExcelAsyncUtil.Observe("Clock", null, ExcelObservableOptions.None, () => new ObservableClock());
+}
+
+```
+
+You can try it like this:
+
+```
+
+=Clock()
+=LosslessClock()
+
+```
+
+If RTD throttle interval is greater than 1 second, then displayed time from the lossless clock will progressively lag from real time, illustrating the difference:
+
+![](clock.png)
 

@@ -2,12 +2,12 @@
 
 namespace LosslessObservable
 {
-    internal class LosslessClock : IExcelObservable
+    internal class ObservableClock : IExcelObservable
     {
         private Timer _timer;
         private List<IExcelObserver> _observers;
 
-        public LosslessClock()
+        public ObservableClock()
         {
             _timer = new Timer(OnTimerTick, null, 0, 1000);
             _observers = new List<IExcelObserver>();
