@@ -1,7 +1,7 @@
 LosslessObservable sample
 ---
 
-You can implement an RealTimeData (RTD) function using `IExcelObservable` interface and `ExcelAsyncUtil.Observe` method.
+You can implement a RealTimeData (RTD) function using `IExcelObservable` interface and `ExcelAsyncUtil.Observe` method.
 
 Real-time data is data that updates on its own schedule (for example, stock quotes, manufacturing statistics, Web server loads, and warehouse activity).
 
