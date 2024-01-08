@@ -18,5 +18,12 @@ namespace LosslessObservable
         {
             return ExcelAsyncUtil.Observe("LosslessClock", null, ExcelObservableOptions.Lossless, () => new LosslessClock());
         }
+
+        public static int SetThrottleInterval(int interval)
+        {
+            Microsoft.Office.Interop.Excel.Application application = (Microsoft.Office.Interop.Excel.Application)ExcelDnaUtil.Application;
+            application.RTD.ThrottleInterval = interval;
+            return application.RTD.ThrottleInterval;
+        }
     }
 }
