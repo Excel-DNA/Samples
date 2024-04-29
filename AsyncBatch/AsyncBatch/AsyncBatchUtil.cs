@@ -1,6 +1,10 @@
 ﻿using System.Timers;
 using Timer = System.Timers.Timer;
 using ExcelDna.Integration;
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace AsyncBatch
 {
@@ -31,7 +35,10 @@ namespace AsyncBatch
         readonly Timer _batchTimer;   // Timer events will fire from a ThreadPool thread
         List<AsyncCall> _currentBatch;
 
-        public AsyncBatchUtil(int maxBatchSize, TimeSpan batchTimeout, Func<List<AsyncCall>, Task<List<object>>> batchRunner)
+        readonly SemaphoreSlim _semaphore;
+        readonly bool _serializeRequests;
+
+        public AsyncBatchUtil(int maxBatchSize, TimeSpan batchTimeout, Func<List<AsyncCall>, Task<List<object>>> batchRunner, bool serializeRequests = false)
         {
             if (maxBatchSize < 1)
             {
@@ -52,6 +59,9 @@ namespace AsyncBatch
             _batchTimer.AutoReset = false;
             _batchTimer.Elapsed += TimerElapsed;
             // Timer is not Enabled (Started) by default
+
+            _serializeRequests = serializeRequests;
+            _semaphore = _serializeRequests ? new SemaphoreSlim(1, 1) : null;
         }
 
         public object Run(string functionName, params object[] args)
@@ -117,6 +127,11 @@ namespace AsyncBatch
 
             try
             {
+                if (_serializeRequests)
+                {
+                    await _semaphore.WaitAsync();
+                }
+
                 var resultList = await _batchRunner(batch);
                 if (resultList.Count != batch.Count)
                 {
@@ -133,6 +148,13 @@ namespace AsyncBatch
                 foreach (var call in batch)
                 {
                     call.TaskCompletionSource.SetException(ex);
+                }
+            }
+            finally
+            {
+                if (_serializeRequests)
+                {
+                    _semaphore.Release();
                 }
             }
         }

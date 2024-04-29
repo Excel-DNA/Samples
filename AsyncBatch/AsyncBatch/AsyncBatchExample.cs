@@ -4,6 +4,11 @@
 // 3. Create an instance of "AsyncBatchUtil" somewhere in your code (it's called "BatchRunner" below), passing in the batch parameters and batch runner from step 2.
 // 4. Create your worksheet functions like "SlowFunction" below, which call "BatchRunner.Run(...)" to run async as part of a batch.
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Threading.Tasks;
 using ExcelDna.Integration;
 
 namespace AsyncBatch
@@ -11,7 +16,7 @@ namespace AsyncBatch
     public static class AsyncBatchExample
     {
         // Step 3. from the list.
-        static readonly AsyncBatchUtil BatchRunner = new AsyncBatchUtil(1000, TimeSpan.FromMilliseconds(250), RunBatch);
+        static readonly AsyncBatchUtil BatchRunner = new AsyncBatchUtil(1000, TimeSpan.FromMilliseconds(250), RunBatch, serializeRequests: false);
 
         // Step 2. from the list.
         // This function will be called for each batch, on a ThreadPool thread.
@@ -19,6 +24,7 @@ namespace AsyncBatch
         // The List<object> returned by the Task must contain the results, corresponding to the calls list.
         static async Task<List<object>> RunBatch(List<AsyncBatchUtil.AsyncCall> calls)
         {
+            Debug.WriteLine($"RunBatch: {calls.Count} calls at {DateTime.Now:HH:mm:ss.fff}");
             var batchStart = DateTime.Now;
             // Simulate things taking a while...
             await Task.Delay(TimeSpan.FromSeconds(10));
@@ -38,6 +44,7 @@ namespace AsyncBatch
                 results.Add(result);
             }
 
+            Debug.WriteLine($"RunBatch Complete at {DateTime.Now:HH:mm:ss.fff}");
             return results;
         }
 
