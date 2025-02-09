@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net452;net6.0-windows</TargetFrameworks>
+		<TargetFrameworks>net462;net6.0-windows</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
 
     <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
@@ -10,7 +10,7 @@
 		<AssemblyOriginatorKeyFile>..\..\assets\exceldna.snk</AssemblyOriginatorKeyFile>-->
 	</PropertyGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="System.Runtime.Caching" />
 	</ItemGroup>
@@ -21,12 +21,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="ExcelDna.Integration" Version="*-*" />
-    <PackageReference Include="ExcelDna.AddIn" Version="*-*" />
-    <PackageReference Include="ExcelDna.Registration" Version="*-*" />
+		<PackageReference Include="ExcelDna.AddIn" Version="*-*" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<!--<ProjectReference Include="..\..\ExcelDna.Registration\ExcelDna.Registration.csproj" />-->
+	  <ProjectReference Include="..\Registration.MapArray\Registration.MapArray.csproj" />
 	</ItemGroup>
 
 </Project>
