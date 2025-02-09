@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net452;net6.0-windows</TargetFrameworks>
+		<TargetFrameworks>net462;net6.0-windows</TargetFrameworks>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<WarnOn>3390;$(WarnOn)</WarnOn>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
@@ -10,6 +10,9 @@
 	<ItemGroup>
 		<None Include="FSharpExample.xlsx" />
 		<None Include="Registration.Sample.FSharp-AddIn.dna" />
+		<Compile Include="FsAsyncUtil.fs" />
+		<Compile Include="FsAsyncRegistration.fs" />
+		<Compile Include="FsParameterConversions.fs" />
 		<Compile Include="AsyncFunctionExamples.fs" />
 		<Compile Include="OptionalExamples.fs" />
 		<Compile Include="MapArrayFunctionExamples.fs" />
@@ -19,13 +22,12 @@
 	<ItemGroup>
 		<PackageReference Update="FSharp.Core" Version="4.7.2" />
 		<PackageReference Update="System.ValueTuple" Version="4.3.0" />
-		<PackageReference Include="ExcelDna.Integration" />
-		<PackageReference Include="ExcelDna.AddIn" />
+		<PackageReference Include="ExcelDna.Integration" Version="*-*" />
+		<PackageReference Include="ExcelDna.AddIn" Version="*-*" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\ExcelDna.Registration.FSharp\ExcelDna.Registration.FSharp.fsproj" />
-		<ProjectReference Include="..\..\ExcelDna.Registration\ExcelDna.Registration.csproj" />
+	  <ProjectReference Include="..\Registration.MapArray\Registration.MapArray.csproj" />
 	</ItemGroup>
 
 </Project>

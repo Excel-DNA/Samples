@@ -7,7 +7,6 @@ open System.Net
 open Microsoft.FSharp.Control.WebExtensions
 open ExcelDna.Integration
 open ExcelDna.Registration
-open ExcelDna.Registration.FSharp
 
 module MapArrayFunctionExamples =
 

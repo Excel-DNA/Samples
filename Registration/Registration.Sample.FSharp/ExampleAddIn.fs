@@ -4,7 +4,6 @@ open System
 open System.Linq.Expressions
 open ExcelDna.Integration
 open ExcelDna.Registration
-open ExcelDna.Registration.FSharp
 
 type FsAsyncAddIn () =
     interface IExcelAddIn with

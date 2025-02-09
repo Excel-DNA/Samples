@@ -34,7 +34,7 @@ namespace ExcelDna.Registration
     ///     3 | 2.0     3.0     {=MyFunc(A1:B3)} -> 2.5
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.ReturnValue, Inherited = false, AllowMultiple = false)]
-    public class MapPropertiesToColumnHeadersAttribute : Attribute
+    public class ExcelMapPropertiesToColumnHeadersAttribute : Attribute
     {
     }
 
@@ -225,7 +225,7 @@ namespace ExcelDna.Registration
 
                 EnumeratedType = typeArgs[0];
 
-                if (!customAttributes.OfType<MapPropertiesToColumnHeadersAttribute>().Any())
+                if (!customAttributes.OfType<ExcelMapPropertiesToColumnHeadersAttribute>().Any())
                     return;
 
                 PropertyInfo[] recordProperties =

@@ -5,7 +5,6 @@ open System.Threading
 open System.Net
 open Microsoft.FSharp.Control.WebExtensions
 open ExcelDna.Integration
-open ExcelDna.Registration.FSharp
 
 // Some test functions
 module TestFunctions =
