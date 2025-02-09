@@ -2,12 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net462;net6.0-windows</TargetFrameworks>
-    <UseWindowsForms>true</UseWindowsForms>
+		<UseWindowsForms>true</UseWindowsForms>
 
-    <ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
-    
-		<!--<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>..\..\assets\exceldna.snk</AssemblyOriginatorKeyFile>-->
+		<ExcelAddInExplicitRegistration>true</ExcelAddInExplicitRegistration>
 	</PropertyGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
