@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net462;net6.0-windows</TargetFrameworks>
+
+		<RootNamespace>Registration.Sample.VisualBasic</RootNamespace>
+		<OptionCompare>Text</OptionCompare>
+
+		<SignAssembly>true</SignAssembly>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ExcelDna.Integration" Version="*-*" />
+		<PackageReference Include="ExcelDna.AddIn" Version="*-*" />
+		<PackageReference Include="ExcelDna.Interop" Version="*-*" />
+	</ItemGroup>
+
+</Project>
