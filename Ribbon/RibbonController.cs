@@ -1,6 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using ExcelDna.Integration.CustomUI;
+﻿using ExcelDna.Integration.CustomUI;
+using System.Runtime.InteropServices;
 
 namespace Ribbon
 {
@@ -25,8 +24,7 @@ namespace Ribbon
 
         public void OnButtonPressed(IRibbonControl control)
         {
-            MessageBox.Show("Hello from control " + control.Id);
-            DataWriter.WriteData();
+            new Form1 { Visible = true, TopMost = true };
         }
     }
 }
