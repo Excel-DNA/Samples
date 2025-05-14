@@ -22,7 +22,7 @@ ensuring that the async/await continuations are again scheduled in a macro conte
 public static void MacroToRunSlowWork()
 {
     // Starts running SlowWork in a context where async/await will return to the macro context on the main Excel thread.
-    ExcelTaskAsync.Run(SlowWork);
+    ExcelAsyncTask.Run(SlowWork);
 }
 
 static async Task SlowWork()
