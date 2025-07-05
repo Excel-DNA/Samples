@@ -3,6 +3,8 @@
 	<PropertyGroup>
 		<TargetFrameworks>net462;net6.0-windows</TargetFrameworks>
 		<UseWindowsForms>true</UseWindowsForms>
+
+		<ExcelAddInExplicitExports>true</ExcelAddInExplicitExports>
 	</PropertyGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
