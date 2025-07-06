@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using ExcelDna.Integration;
 using ExcelDna.Registration;
 
 namespace Registration.Sample
@@ -31,7 +32,8 @@ namespace Registration.Sample
         static readonly Lazy<TimingFunctionExecutionHandler> _handler =
             new Lazy<TimingFunctionExecutionHandler>(() => new TimingFunctionExecutionHandler());
 
-        internal static FunctionExecutionHandler TimingHandlerSelector(ExcelFunctionRegistration functionRegistration)
+        [ExcelFunctionExecutionHandlerSelector]
+        public static IFunctionExecutionHandler TimingHandlerSelector(IExcelFunctionInfo functionRegistration)
         {
             // Eat the TimingAttributes, and return a timer handler if there were any
             if (functionRegistration.CustomAttributes.RemoveAll(att => att is TimingAttribute) == 0)
@@ -41,5 +43,5 @@ namespace Registration.Sample
             }
             return _handler.Value;
         }
-    } 
+    }
 }
