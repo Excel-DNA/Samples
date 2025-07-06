@@ -51,9 +51,9 @@ namespace ExcelDna.Registration
         /// 2-dimensional Excel arrays can be mapped to a single function parameter with
         /// [MapPropertiesToColumnHeaders].
         /// </summary>
-        public static IEnumerable<ExcelFunctionRegistration> ProcessMapArrayFunctions(
-            this IEnumerable<ExcelFunctionRegistration> registrations,
-            ParameterConversionConfiguration config = null)
+        public static IEnumerable<IExcelFunctionInfo> ProcessMapArrayFunctions(
+            IEnumerable<IExcelFunctionInfo> registrations,
+            IExcelFunctionRegistrationConfiguration config)
         {
             foreach (var reg in registrations)
             {
@@ -241,34 +241,33 @@ namespace ExcelDna.Registration
 
             ExcelParameterRegistration ParameterRegistration { set; get; }
 
-            void PreparePropertyConverters<Registration>(ParameterConversionConfiguration config,
-                Registration reg, Func<ParameterConversionConfiguration, Type, Registration, LambdaExpression> getConversion)
+            void PreparePropertyConverters<Registration>(Registration reg, Func<Type, Registration, LambdaExpression> getConversion)
             {
                 Type[] propTypes = (MappedProperties == null)
                     ? new[] { EnumeratedType ?? Type }
                     : Array.ConvertAll(MappedProperties, p => p.PropertyType);
                 LambdaExpression[] lambdas = Array.ConvertAll(propTypes,
-                    pt => (config == null) ? null : getConversion(config, EnumeratedType ?? Type, reg));
+                    pt => getConversion(EnumeratedType ?? Type, reg));
                 lambdas = Array.ConvertAll(lambdas, l => CastParamAndResult(l, typeof(object)));
                 PropertyConverters = Array.ConvertAll(lambdas,
                     l => (l == null) ? null : (Func<object, object>)l.Compile());
             }
 
-            public ShimParameter(Type type, ExcelParameterRegistration reg, ParameterConversionConfiguration config)
+            public ShimParameter(Type type, ExcelParameterRegistration reg, IExcelFunctionRegistrationConfiguration config)
                 : this(type, reg.CustomAttributes)
             {
                 // Try to find a converter for EnumeratedType
                 ParameterRegistration = reg;
-                PreparePropertyConverters(config, reg, ParameterConversionRegistration.GetParameterConversion);
+                PreparePropertyConverters(reg, config.GetParameterConversion);
             }
 
             IExcelFunctionReturn ReturnRegistration { set; get; }
 
-            public ShimParameter(Type type, IExcelFunctionReturn reg, ParameterConversionConfiguration config)
+            public ShimParameter(Type type, IExcelFunctionReturn reg, IExcelFunctionRegistrationConfiguration config)
                 : this(type, reg.CustomAttributes)
             {
                 ReturnRegistration = reg;
-                PreparePropertyConverters(config, reg, ParameterConversionRegistration.GetReturnConversion);
+                PreparePropertyConverters(reg, config.GetReturnConversion);
             }
 
             /// <summary>
