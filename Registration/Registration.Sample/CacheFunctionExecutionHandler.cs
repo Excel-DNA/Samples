@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.Caching;
 using System.Text;
+using ExcelDna.Integration;
 using ExcelDna.Registration;
 
 namespace Registration.Sample
@@ -45,7 +46,7 @@ namespace Registration.Sample
         public override void OnSuccess(FunctionExecutionArgs args)
         {
             // Store in cache
-            _cache.Add((string)args.Tag, args.ReturnValue, 
+            _cache.Add((string)args.Tag, args.ReturnValue,
                 new CacheItemPolicy { AbsoluteExpiration = DateTime.UtcNow + _cacheTimeout });
         }
 
@@ -64,7 +65,8 @@ namespace Registration.Sample
         // (This code can be anywhere... - need not be in this class)
 
         // In this case, we only ever make one 'handler' object
-        public static FunctionExecutionHandler CacheHandlerSelector(ExcelFunctionRegistration functionRegistration)
+        [ExcelFunctionExecutionHandlerSelector]
+        public static IFunctionExecutionHandler CacheHandlerSelector(IExcelFunctionInfo functionRegistration)
         {
             // Eat the TimingAttributes, and return a timer handler if there were any
             if (functionRegistration.CustomAttributes.OfType<CacheAttribute>().Any())
@@ -80,7 +82,7 @@ namespace Registration.Sample
 
     }
 
-    
+
 }
 
 
