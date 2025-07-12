@@ -31,14 +31,14 @@ namespace Registration.Sample
             return input + "," + QtherInpEt + ", : " + args.Length;
         }
 
-        // When we enter =dnaParamsFunc2("a",,"c","d",,"f") we expect a,,c,[2:d,ExcelMissing,f]
+        // When we enter =dnaParamsFunc2("a",,"c","d",,"f") we expect a,,c, [3: d,ExcelDna.Integration.ExcelMissing,f]
 
         [ExcelFunction(ExplicitRegistration = true)]
         public static string dnaParamsFunc2(
             [ExcelArgument(Name = "first.Input", Description = "is a useful start")]
             object input,
             [ExcelArgument(Name = "second.Input", Description = "is some more stuff")]
-            string input2, 
+            string input2,
             [ExcelArgument(Description = "is another param ")]
             string QtherInpEt,
             [ExcelArgument(Name = "Value", Description = "gives the Rest")]
