@@ -1,3 +1,0 @@
-<DnaLibrary Name="Registration.Sample.VisualBasic Add-In" RuntimeVersion="v4.0" >
-  <ExternalLibrary Path="Registration.Sample.VisualBasic.dll" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" />
-</DnaLibrary>
