@@ -9,14 +9,13 @@
 
 	<ItemGroup>
 		<None Include="FSharpExample.xlsx" />
-		<None Include="Registration.Sample.FSharp-AddIn.dna" />
 		<Compile Include="FsAsyncUtil.fs" />
 		<Compile Include="FsAsyncRegistration.fs" />
+		<Compile Include="FsMapArrayFunctionRegistration.fs" />
 		<Compile Include="FsParameterConversions.fs" />
 		<Compile Include="AsyncFunctionExamples.fs" />
 		<Compile Include="OptionalExamples.fs" />
 		<Compile Include="MapArrayFunctionExamples.fs" />
-		<Compile Include="ExampleAddIn.fs" />
 	</ItemGroup>
 
 	<ItemGroup>
