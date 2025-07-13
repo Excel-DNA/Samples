@@ -12,6 +12,7 @@ module TestFunctions =
     /// can be called from Excel
     let dnaFsDownloadString url = 
         try
+            ServicePointManager.SecurityProtocol <- SecurityProtocolType.Tls12;
             let uri = new System.Uri(url)
             let webClient = new WebClient()
             let html = webClient.DownloadString(uri)
@@ -33,7 +34,7 @@ module TestFunctions =
     [<ExcelFunction>]
     let dnaFsDownloadStringAsync url = async {
         try
-
+            ServicePointManager.SecurityProtocol <- SecurityProtocolType.Tls12;
             // In here we could check for cancellation using 
             // let! ct = Async.CancellationToken
             // if ct.IsCancellationRequested then ...
