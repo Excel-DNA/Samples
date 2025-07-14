@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using ExcelDna.Integration;
 using ExcelDna.Registration;
 
 namespace Registration.Sample
@@ -14,7 +15,7 @@ namespace Registration.Sample
 
             // Tag will flow through the whole handler
             args.Tag = args.FunctionName + ":" + Index;
-            Debug.Print("{0} - OnEntry - Args: {1}", args.Tag, string.Join(",", args.Arguments.Select( arg => arg.ToString() )));
+            Debug.Print("{0} - OnEntry - Args: {1}", args.Tag, string.Join(",", args.Arguments.Select(arg => arg.ToString())));
         }
 
         public override void OnSuccess(FunctionExecutionArgs args)
@@ -36,7 +37,8 @@ namespace Registration.Sample
         // (Add a registration index just to show we can attach arbitrary data to the captured handler instance which may be created for each function.)
         // If we return the same object for every function, the object needs to be re-entrancy safe is used by IsThreadSafe functions.
         static int _index = 0;
-        internal static FunctionExecutionHandler LoggingHandlerSelector(ExcelFunctionRegistration functionRegistration)
+        [ExcelFunctionExecutionHandlerSelector]
+        public static IFunctionExecutionHandler LoggingHandlerSelector(IExcelFunctionInfo functionRegistration)
         {
             return new FunctionLoggingHandler { Index = _index++ };
         }

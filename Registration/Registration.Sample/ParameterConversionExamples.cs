@@ -13,8 +13,8 @@ namespace Registration.Sample
     public static class ParameterConversionExamples
     {
         // Explore conversions from object -> different types
-        [ExcelFunction(IsMacroType=true)]
-        public static string dnaConversionTest([ExcelArgument(AllowReference=true)] object arg)
+        [ExcelFunction(IsMacroType = true)]
+        public static string dnaConversionTest([ExcelArgument(AllowReference = true)] object arg)
         {
             // This is the full gamut we need to support
             if (arg is double)
@@ -131,7 +131,7 @@ namespace Registration.Sample
         {
             return arg;
         }
-        
+
         [ExcelFunction]
         public static string dnaParameterConvertTest(double? optTest)
         {
@@ -209,7 +209,7 @@ namespace Registration.Sample
             return val.HasValue ? "VAL: " + val : "NULL";
         }
 
-        public enum  TestEnum1
+        public enum TestEnum1
         {
             Negative,
             Zero,
@@ -277,13 +277,13 @@ namespace Registration.Sample
         public static Complex dnaNullableComplex(Complex? c)
         {
             //return val.HasValue ? val.Value : TestEnum.Zero;
-            return c ?? new Complex(111,222);
+            return c ?? new Complex(111, 222);
         }
 
         [ExcelMapArrayFunction]
         public static IEnumerable<TestEnum1> dnaEnumsEnumerated(IEnumerable<TestEnum2> v)
         {
-            foreach(var i in v)
+            foreach (var i in v)
             {
                 switch (i)
                 {
@@ -334,11 +334,12 @@ namespace Registration.Sample
             return "The Test (2) value is " + tt._value.Value;
         }
 
-        [ExcelFunction]
-        public static TestType1 dnaTestFunction2Ret1(TestType2 tt)
-        {
-            return new TestType1("The Test (2) value is " + tt._value.Value);
-        }
+        // Not yet supported with 1.9.0-rc2
+        //[ExcelFunction]
+        //public static TestType1 dnaTestFunction2Ret1(TestType2 tt)
+        //{
+        //    return new TestType1("The Test (2) value is " + tt._value.Value);
+        //}
 
         [ExcelFunction]
         public static string dnaJoinStrings(string separator, string[] values)

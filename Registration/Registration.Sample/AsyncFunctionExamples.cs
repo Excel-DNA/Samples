@@ -10,9 +10,7 @@ namespace Registration.Sample
 {
     public static class AsyncFunctionExamples
     {
-        // Will not be registered in Excel by Excel-DNA, without being picked up by our Registration processing
-        // since there is no ExcelFunction attribute, and ExplicitRegistration="true" in the .dna file prevents this 
-        // function from being registered by the default processing.
+        // Will not be registered in Excel by Excel-DNA, since ExplicitExports="true".
         public static string dnaSayHello(string name)
         {
             return "Hello " + name + "!";

@@ -3,8 +3,7 @@
 open System
 open System.Collections.Generic
 open System.Linq.Expressions
-open System.Reflection
-open ExcelDna.Registration
+open ExcelDna.Integration
 
 module FsAsyncRegistration =
 
@@ -22,8 +21,12 @@ module FsAsyncRegistration =
             let innerCall = Expression.Invoke(functionLambda, funcParams)
             let observeCall = Expression.Call(convert, innerCall)
             Expression.Lambda(observeCall, functionLambda.Parameters)
-        let convertMapping (reg : ExcelFunctionRegistration) =
+        let convertMapping (reg : IExcelFunctionInfo) =
             if reg.FunctionLambda.ReturnType.IsGenericType && reg.FunctionLambda.ReturnType.GetGenericTypeDefinition() = typedefof<Async<_>> then
                reg.FunctionLambda <- convertAsync reg.FunctionLambda
             reg
         Seq.map convertMapping registrations
+
+    [<ExcelFunctionProcessor>]
+    let ProcessFsAsyncFunctions(registrations: IEnumerable<IExcelFunctionInfo>, config: IExcelFunctionRegistrationConfiguration) : IEnumerable<IExcelFunctionInfo> =
+        ProcessFsAsyncRegistrations(registrations)

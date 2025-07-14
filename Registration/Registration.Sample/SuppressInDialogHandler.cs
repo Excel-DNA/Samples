@@ -12,7 +12,7 @@ namespace ExcelDna.Registration
     // TODO: Only works for functions that return string or object. Automatically add a return value conversion otherwise?
 
     [AttributeUsage(AttributeTargets.Method)]
-    public class SuppressInDialogAttribute :  Attribute, IFunctionExecutionHandler
+    public class SuppressInDialogAttribute : Attribute, IFunctionExecutionHandler
     {
         readonly string _dialogResult;
         public SuppressInDialogAttribute(string dialogMessage = "!!! NOT CALCULATED IN DIALOG !!!")
@@ -43,11 +43,12 @@ namespace ExcelDna.Registration
         /// </summary>
         /// <param name="functionRegistration"></param>
         /// <returns></returns>
-        public static IFunctionExecutionHandler SuppressInDialogSelector(ExcelFunctionRegistration functionRegistration)
+        [ExcelFunctionExecutionHandlerSelector]
+        public static IFunctionExecutionHandler SuppressInDialogSelector(IExcelFunctionInfo functionRegistration)
         {
             // Eat the TimingAttributes, and return a timer handler if there were any
             if (functionRegistration.CustomAttributes.OfType<SuppressInDialogAttribute>().Any() &&
-                (functionRegistration.FunctionLambda.ReturnType == typeof(object) || 
+                (functionRegistration.FunctionLambda.ReturnType == typeof(object) ||
                  functionRegistration.FunctionLambda.ReturnType == typeof(string)))
             {
                 // Get the first cache attribute, and remove all of them
