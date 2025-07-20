@@ -15,5 +15,11 @@ namespace Registration.Sample
         {
             return new TestType2(value);
         }
+
+        [ExcelReturnConversion]
+        public static string FromTestType1(TestType1 value)
+        {
+            return value.ToString();
+        }
     }
 }
