@@ -334,12 +334,11 @@ namespace Registration.Sample
             return "The Test (2) value is " + tt._value.Value;
         }
 
-        // Not yet supported with 1.9.0-rc2
-        //[ExcelFunction]
-        //public static TestType1 dnaTestFunction2Ret1(TestType2 tt)
-        //{
-        //    return new TestType1("The Test (2) value is " + tt._value.Value);
-        //}
+        [ExcelFunction]
+        public static TestType1 dnaTestFunction2Ret1(TestType2 tt)
+        {
+            return new TestType1("The Test (2) value is " + tt._value.Value);
+        }
 
         [ExcelFunction]
         public static string dnaJoinStrings(string separator, string[] values)
