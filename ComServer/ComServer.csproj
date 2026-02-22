@@ -4,6 +4,10 @@
 		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
 	</PropertyGroup>
 
+  	<PropertyGroup>
+	    <ExcelAddInComServer>true</ExcelAddInComServer>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
 	</ItemGroup>
