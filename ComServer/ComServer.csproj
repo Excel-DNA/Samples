@@ -5,6 +5,8 @@
 	</PropertyGroup>
 
   	<PropertyGroup>
+	    <ExcelAddInTlbExp>$(MSBuildProjectDirectory)\TlbExp.exe</ExcelAddInTlbExp>
+	    <ExcelAddInTlbCreate>true</ExcelAddInTlbCreate>
 	    <ExcelAddInComServer>true</ExcelAddInComServer>
 	</PropertyGroup>
 
