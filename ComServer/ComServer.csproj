@@ -4,6 +4,12 @@
 		<TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
 	</PropertyGroup>
 
+  	<PropertyGroup>
+	    <ExcelAddInTlbExp>$(MSBuildProjectDirectory)\TlbExp.exe</ExcelAddInTlbExp>
+	    <ExcelAddInTlbCreate>true</ExcelAddInTlbCreate>
+	    <ExcelAddInComServer>true</ExcelAddInComServer>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
 	</ItemGroup>

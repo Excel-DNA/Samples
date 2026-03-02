@@ -2,8 +2,8 @@
 using ExcelDna.ComInterop;
 using ExcelDna.Integration;
 
-[assembly:ComVisible(false)]
-    
+[assembly: ComVisible(false)]
+
 namespace DnaComServer
 {
 
@@ -17,12 +17,12 @@ namespace DnaComServer
 
     [ComVisible(true)]
     [ComDefaultInterface(typeof(IComLibraryC))]
-    public class ComLibraryC
+    public class ComLibraryC : IComLibraryC
     {
         public ComLibraryC()
         {
         }
-        
+
         public string ComLibraryHello()
         {
             return "Hello from DnaComServer.ComLibrary";
@@ -44,7 +44,7 @@ namespace DnaComServer
 
     [ComVisible(true)]
     [ComDefaultInterface(typeof(IComLibrary2C))]
-    public class ComLibrary2C
+    public class ComLibrary2C : IComLibrary2C
     {
         public string ComLibrary2Hello()
         {
