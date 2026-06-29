@@ -1,6 +1,17 @@
-﻿This project has the following NuGet package installed:
-* ExcelDna.AddIn
+# RtdClock-ExcelRtdServer
 
-The add-in defines:
-* an RTD server based on the ExcelRtdServer base class, 
-* a UDF that called `dnaRtdClock_ExcelRtdServer`.
+This is the simplest `ExcelRtdServer` sample. It exposes `dnaRtdClock_ExcelRtdServer()`, which calls:
+
+```csharp
+XlCall.RTD(RtdClockServer.ServerProgId, null, "");
+```
+
+That uses Excel-DNA's on-demand RTD registration path, so the sample does not require explicit COM registration before the worksheet function is called.
+
+For the advanced pre-registered COM server path, including direct worksheet formulas like:
+
+```excel
+=RTD("RtdClock.ClockServer",,"")
+```
+
+see the sibling sample `RtdClock-ExcelRtdServer-PreRegistered`.

@@ -8,7 +8,7 @@ namespace RtdClock_Rx_Registration
         public void AutoOpen()
         {
             // Since we have specified ExplicitRegistration=true in the .dna file, we need to do all registration explicitly.
-            // Here we only add the async processing, which applies to our IObservable function.
+            // Here we add the async processing built into ExcelDna.Integration, which applies to our IObservable function.
             ExcelRegistration.GetExcelFunctions()
                              .ProcessAsyncRegistrations()
                              .RegisterFunctions();

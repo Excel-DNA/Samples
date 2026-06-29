@@ -6,6 +6,9 @@ The RtdClocks solution has a number of projects - each project is a stand-alone 
 This project implements an RTD server using the Excel-DNA base class `ExcelRtdServer`. Any RTD server implemented in an Excel-DNA add-in should use the base class, rather than implementing the IRtdServer interface directly. The base class provides full access to all RTD features, and exposes a thread-safe and update notification that can be called at any time, at high frequency, from any thread.
 Internally, Excel-DNA uses an ExcelRtdServer for all the other RTD-based features, including RxExcel / IObservable support.
 
+## RtdClock-ExcelRtdServer-PreRegistered
+This project shows the advanced COM pre-registration path for an `ExcelRtdServer`, so the server can be used directly from a worksheet with `=RTD("RtdClock.ClockServer",,"")`. It explains the required `[Guid]` / `[ProgId]` attributes, `ComServer="true"` `.dna` metadata, `regsvr32` registration path, and registry checks.
+
 ## RtdClock-IExcelObservable
 This project uses the higher-level abstraction of an IObservable / IObserver interface to implement the RTD function. In order to allow compatibility with .NET 2.0, the interfaces IExcelObservable / IExcelObserver are used by Excel-DNA, but the semantics is the same as the .NET 4.0 interfaces IObservable<object> / IObserver<object>.
 

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExcelDna.Testing" Version="*-*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RtdClock-ExcelRtdServer\RtdClock-ExcelRtdServer.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>

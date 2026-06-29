@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-ExcelRtdServer", "RtdClock-ExcelRtdServer\RtdClock-ExcelRtdServer.csproj", "{95E29CF7-B6A0-44C8-A07F-0261D630D310}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-ExcelRtdServer-PreRegistered", "RtdClock-ExcelRtdServer-PreRegistered\RtdClock-ExcelRtdServer-PreRegistered.csproj", "{D1996AEE-EA93-4726-9866-D7216D38B08D}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-IExcelObservable", "RtdClock-IExcelObservable\RtdClock-IExcelObservable.csproj", "{BBA5690D-8B8A-444A-B63E-681B97D1B282}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-Rx", "RtdClock-Rx\RtdClock-Rx.csproj", "{F71ED465-80F8-474F-AF62-314A9B398356}"
@@ -16,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-ExcelRtdServer.Test", "RtdClock-ExcelRtdServer.Test\RtdClock-ExcelRtdServer.Test.csproj", "{FD04867E-835C-47AC-9B3D-EABC0F6B5258}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtdClock-ExcelRtdServer-PreRegistered.Test", "RtdClock-ExcelRtdServer-PreRegistered.Test\RtdClock-ExcelRtdServer-PreRegistered.Test.csproj", "{46AD0785-FE93-4C8B-B04C-862F0024C6AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +32,10 @@ Global
 		{95E29CF7-B6A0-44C8-A07F-0261D630D310}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95E29CF7-B6A0-44C8-A07F-0261D630D310}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95E29CF7-B6A0-44C8-A07F-0261D630D310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1996AEE-EA93-4726-9866-D7216D38B08D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1996AEE-EA93-4726-9866-D7216D38B08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1996AEE-EA93-4726-9866-D7216D38B08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1996AEE-EA93-4726-9866-D7216D38B08D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BBA5690D-8B8A-444A-B63E-681B97D1B282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBA5690D-8B8A-444A-B63E-681B97D1B282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBA5690D-8B8A-444A-B63E-681B97D1B282}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,6 +48,14 @@ Global
 		{6B1C2A34-1C5F-486A-9226-BDF67C303500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B1C2A34-1C5F-486A-9226-BDF67C303500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B1C2A34-1C5F-486A-9226-BDF67C303500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD04867E-835C-47AC-9B3D-EABC0F6B5258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD04867E-835C-47AC-9B3D-EABC0F6B5258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD04867E-835C-47AC-9B3D-EABC0F6B5258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD04867E-835C-47AC-9B3D-EABC0F6B5258}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46AD0785-FE93-4C8B-B04C-862F0024C6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46AD0785-FE93-4C8B-B04C-862F0024C6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46AD0785-FE93-4C8B-B04C-862F0024C6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46AD0785-FE93-4C8B-B04C-862F0024C6AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

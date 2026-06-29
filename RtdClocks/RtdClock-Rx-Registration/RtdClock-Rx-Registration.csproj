@@ -14,12 +14,11 @@
        (For .NET 6 we use the .deps.json file to find the assemblies to pack, so this property is not needed)
   -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
-    <ExcelAddInInclude>ExcelDna.Registration.dll;System.Reactive.dll;System.Runtime.CompilerServices.Unsafe.dll;System.Threading.Tasks.Extensions.dll</ExcelAddInInclude>
+    <ExcelAddInInclude>System.Reactive.dll;System.Runtime.CompilerServices.Unsafe.dll;System.Threading.Tasks.Extensions.dll</ExcelAddInInclude>
   </PropertyGroup>
   
   <ItemGroup>
 		<PackageReference Include="ExcelDna.Addin" Version="*-*" />
-		<PackageReference Include="ExcelDna.Registration" Version="*-*" />
 		<PackageReference Include="System.Reactive" Version="*-*" />
 	</ItemGroup>
 	
